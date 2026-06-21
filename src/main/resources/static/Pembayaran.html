@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/svara.js"></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background: #050310;
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .bg-mesh {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 10% 0%, rgba(127,19,236,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 90% 100%, rgba(0,245,255,0.08) 0%, transparent 60%),
+                #050310;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .topnav {
+            background: rgba(5, 3, 16, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .logo-text {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 20%, #bf5af2 70%, #00f5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .search-bar {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+        .search-bar input { color: white; }
+        .search-bar input::placeholder { color: rgba(255,255,255,0.25); }
+        .search-bar input:focus { outline: none; }
+
+        .glass-card {
+            background: rgba(255,255,255,0.025);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* Ticket Category Cards */
+        .ticket-cat {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .ticket-cat:hover {
+            background: rgba(127,19,236,0.06);
+            border-color: rgba(127,19,236,0.25);
+            transform: translateY(-2px);
+        }
+        .ticket-cat.selected {
+            background: rgba(127,19,236,0.1);
+            border-color: rgba(127,19,236,0.5);
+            box-shadow: 0 0 0 1px rgba(127,19,236,0.3), 0 8px 24px rgba(127,19,236,0.1);
+        }
+        .ticket-cat.sold-out {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .ticket-cat .accent-left {
+            position: absolute;
+            left: 0; top: 20%; bottom: 20%;
+            width: 3px;
+            border-radius: 2px;
+        }
+
+        /* Qty control */
+        .qty-ctrl {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .qty-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .qty-btn:hover { background: rgba(127,19,236,0.2); }
+        .qty-btn:active { transform: scale(0.9); }
+
+        /* Payment method pills */
+        .pay-pill {
+            padding: 6px 12px;
+            background: rgba(127,19,236,0.08);
+            border: 1px solid rgba(127,19,236,0.2);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+        .pay-pill:hover { background: rgba(127,19,236,0.2); border-color: rgba(127,19,236,0.4); }
+
+        /* Pay now button */
+        .btn-pay {
+            background: linear-gradient(135deg, #7f13ec, #bf5af2);
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-weight: 700;
+            border-radius: 16px;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(127,19,236,0.5);
+        }
+        .btn-pay:active { transform: translateY(0); }
+
+        .section-title { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; }
+        .price-text { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; color: #fbbf24; }
+        .label-text {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page-enter { animation: slide-up 0.5s ease forwards; }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(127,19,236,0.3); border-radius: 2px; }
+    </style>
+</head>
+
+<body class="page-enter">
+    <div class="bg-mesh"></div>
+
+    <!-- NAV -->
+    <nav class="h-[68px] fixed top-0 right-0 left-0 z-50 topnav flex justify-between items-center px-8 gap-6">
+        <div class="flex items-center gap-2 shrink-0">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #7f13ec, #bf5af2);">
+                <span class="material-symbols-outlined text-white" style="font-size: 16px; font-variation-settings: 'FILL' 1;">graphic_eq</span>
+            </div>
+            <span class="logo-text text-2xl">SVARA</span>
+        </div>
+        <div class="flex-1 max-w-md">
+            <div class="search-bar flex items-center rounded-full px-4 py-2.5 gap-3">
+                <span class="material-symbols-outlined text-white/30" style="font-size: 18px;">search</span>
+                <input class="flex-1 bg-transparent border-none text-sm" placeholder="Konser, artis, atau lokasi..." type="text" />
+            </div>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+            <button class="w-9 h-9 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/5 transition-all">
+                <span class="material-symbols-outlined" style="font-size: 20px;">notifications</span>
+            </button>
+            <div class="h-8 w-px" style="background:rgba(255,255,255,0.07);"></div>
+            <div class="flex items-center gap-2.5">
+                <img alt="Avatar" class="w-9 h-9 rounded-full border border-purple-500/30" src="https://i.pinimg.com/736x/fb/a8/1f/fba81fdf7b0f35f5fadc99871816c8eb.jpg" />
+                <div class="hidden sm:block">
+                    <p class="text-sm font-semibold leading-none mb-0.5" style="font-family: 'Plus Jakarta Sans', sans-serif;">Jack Chowie</p>
+                    <p class="text-[10px] text-white/40 uppercase tracking-widest" style="font-family: 'Plus Jakarta Sans', sans-serif;">Premium</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="pt-[88px] pb-16 px-8 max-w-[1440px] mx-auto grid grid-cols-12 gap-7 relative z-10">
+
+        <!-- LEFT CONTENT -->
+        <div class="col-span-12 lg:col-span-8 space-y-6">
+
+            <!-- Hero Banner -->
+            <section class="relative h-[360px] rounded-3xl overflow-hidden">
+                <img alt="Coldplay Concert" class="w-full h-full object-cover opacity-55" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbDfaF-U4W9B6EPk5-Krr6cKlyRaHOwXrNmd0JjesKCKFIRlUHueiGam5J85X8tkTScMwctHA1JK8eKrj_EZoSlZmmGWHarQySMY_srP6ySoZdJqrT3m-ZEq7NHtDsmcUvPCdnluSEQDml8zresDfsVn8zJbr7crA-4p262Tm2hyTrtnTUHsoD8-WhdADAYAyLbIaKfltfv3AXSY1k14rOdaBKeDvXUaBQ9g5UXfmwiAfV-VXa22qHEk7Tc1X9UM4cIU-P27IYbnI" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.96) 0%, rgba(5,3,16,0.3) 60%, transparent 100%);"></div>
+                <div class="absolute bottom-0 left-0 p-8 space-y-2">
+                    <span class="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#050310;font-family:'Plus Jakarta Sans',sans-serif;">🎫 Ticket Booking</span>
+                    <h1 class="text-4xl font-extrabold mb-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">Coldplay: Music of the Spheres</h1>
+                    <div class="flex items-center gap-5 text-white/60 text-sm">
+                        <div class="flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-blue-400" style="font-size:16px;">calendar_today</span>
+                            15 November 2024
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-blue-400" style="font-size:16px;">location_on</span>
+                            Stadion Utama GBK, Jakarta
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ticket Categories -->
+            <section class="space-y-4">
+                <div class="flex justify-between items-end">
+                    <h2 class="section-title text-xl">Pilih Kategori Tiket</h2>
+                    <span class="text-white/35 text-xs" style="font-family:'Plus Jakarta Sans',sans-serif;">Harga sudah termasuk pajak</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                    <!-- Festival A -->
+                    <div class="ticket-cat relative" style="border-left: 3px solid #3b82f6;">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="font-bold text-base mb-0.5" style="font-family:'Plus Jakarta Sans',sans-serif;">Festival A</h3>
+                                <p class="text-white/45 text-xs">Standing Area · Gate 1</p>
+                            </div>
+                            <span class="text-lg font-bold text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">Rp 1.500.000</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="material-symbols-outlined text-emerald-400" style="font-size:15px;">verified</span>
+                            <span class="text-emerald-400 text-xs">Dekat panggung utama</span>
+                        </div>
+                        <button class="w-full py-2.5 rounded-xl border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider hover:bg-blue-500/10 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                    </div>
+
+                    <!-- Tribune Gold (Selected) -->
+                    <div class="ticket-cat selected relative" style="border-left: 3px solid #fbbf24;">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="font-bold text-base mb-0.5 text-yellow-400" style="font-family:'Plus Jakarta Sans',sans-serif;">Tribune Gold ✨</h3>
+                                <p class="text-white/45 text-xs">Seating Number · Gate 3</p>
+                            </div>
+                            <span class="text-lg font-bold text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">Rp 850.000</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="material-symbols-outlined text-blue-400" style="font-size:15px;">visibility</span>
+                            <span class="text-blue-400 text-xs">View tengah stadion</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="label-text text-yellow-400/70">Terpilih</span>
+                            <div class="qty-ctrl">
+                                <div class="qty-btn"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">remove</span></div>
+                                <span class="w-10 text-center text-sm font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">2</span>
+                                <div class="qty-btn"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">add</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tribune Silver -->
+                    <div class="ticket-cat relative" style="border-left: 3px solid rgba(255,255,255,0.2);">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="font-bold text-base mb-0.5" style="font-family:'Plus Jakarta Sans',sans-serif;">Tribune Silver</h3>
+                                <p class="text-white/45 text-xs">Seating Number · Gate 5</p>
+                            </div>
+                            <span class="text-lg font-bold text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">Rp 650.000</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="material-symbols-outlined text-white/35" style="font-size:15px;">side_navigation</span>
+                            <span class="text-white/40 text-xs">Sayap kiri/kanan</span>
+                        </div>
+                        <button class="w-full py-2.5 rounded-xl border border-white/10 text-white/50 text-xs font-bold uppercase tracking-wider hover:bg-white/5 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                    </div>
+
+                    <!-- Festival B - Sold Out -->
+                    <div class="ticket-cat sold-out relative" style="border-left: 3px solid rgba(255,45,120,0.4);">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="font-bold text-base mb-0.5 text-white/40" style="font-family:'Plus Jakarta Sans',sans-serif;">Festival B</h3>
+                                <p class="text-white/25 text-xs">Standing Area · Gate 2</p>
+                            </div>
+                            <span class="text-lg font-bold text-white/40" style="font-family:'Plus Jakarta Sans',sans-serif;">Rp 1.200.000</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="material-symbols-outlined text-red-400/70" style="font-size:15px;">block</span>
+                            <span class="text-red-400/70 text-xs">Habis Terjual</span>
+                        </div>
+                        <button class="w-full py-2.5 rounded-xl bg-white/3 border border-white/5 text-white/25 text-xs font-bold uppercase tracking-wider cursor-not-allowed" style="font-family:'Plus Jakarta Sans',sans-serif;" disabled>Sold Out</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="col-span-12 lg:col-span-4">
+            <div class="sticky top-24 space-y-5">
+
+                <!-- Seat Map -->
+                <div class="glass-card rounded-2xl p-5 overflow-hidden">
+                    <h3 class="text-sm font-bold mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Layout Stadion 🗺️</h3>
+                    <div class="aspect-square rounded-xl relative overflow-hidden flex items-center justify-center" style="background: rgba(127,19,236,0.05);">
+                        <img alt="Seat Map" class="w-full h-full object-cover opacity-40 mix-blend-luminosity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3Y9z5Stfbb9JdMT773-Jqc36ZIv_tLIqFxXi8RTLnUkuCy5JsFwuayO0o9lDgNKHpOE-ImbwLYunJz775L6i3rI5b5Cf_08L3wUs5UXMQ1Rt4gniTfoP8BuuCfwjKBduz-b3F5v-xiWWEMl0v4JXCzlYTZUKFSs5GO47-ViX5tOR8LiA4KN2XzXtOHbfRy5LHWfQvzrU9LdC2ElDzABf15xZHS7o8TS5amvngyK_ekeeg7s8PitX-rUjWeKPROnn0mfHshuaPTYw" />
+                        <button class="absolute inset-0 flex items-center justify-center">
+                            <span class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);font-family:'Plus Jakarta Sans',sans-serif;backdrop-filter:blur(8px);">Perbesar Peta</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="glass-card rounded-2xl p-5 space-y-3">
+                    <h3 class="text-sm font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Metode Pembayaran 💳</h3>
+                    <div class="space-y-2.5">
+                        <div class="p-3 rounded-xl bg-white/2 cursor-pointer hover:bg-purple-500/5 hover:border-purple-500/20 transition-all">
+                            <p class="label-text mb-2">E-Wallet</p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="pay-pill">GoPay</span>
+                                <span class="pay-pill">OVO</span>
+                                <span class="pay-pill">DANA</span>
+                            </div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-white/2 cursor-pointer hover:bg-purple-500/5 hover:border-purple-500/20 transition-all">
+                            <p class="label-text mb-2">Virtual Account</p>
+                            <div class="flex gap-2">
+                                <span class="pay-pill">BCA</span>
+                                <span class="pay-pill">Mandiri</span>
+                            </div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-white/2 cursor-pointer hover:bg-purple-500/5 hover:border-purple-500/20 transition-all flex items-center justify-between">
+                            <p class="label-text">QRIS</p>
+                            <span class="material-symbols-outlined text-blue-400" style="font-size:20px;">qr_code_2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="glass-card rounded-2xl p-5 space-y-5" style="border-color: rgba(127,19,236,0.15);">
+                    <h3 class="text-sm font-bold border-b border-white/6 pb-4" style="font-family:'Plus Jakarta Sans',sans-serif;">Ringkasan Pesanan 🧾</h3>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Tribune Gold</p>
+                                <p class="text-white/40 text-xs">2 Tiket × Rp 850.000</p>
+                            </div>
+                            <p class="text-sm font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Rp 1.700.000</p>
+                        </div>
+                        <div class="flex justify-between text-white/40 text-xs">
+                            <p>Biaya Layanan</p>
+                            <p>Rp 50.000</p>
+                        </div>
+                        <div class="flex justify-between text-white/40 text-xs">
+                            <p>Pajak Hiburan (15%)</p>
+                            <p>Rp 255.000</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/6 space-y-4">
+                        <div class="flex justify-between items-end">
+                            <span class="text-white/60 text-sm">Total Pembayaran</span>
+                            <span class="price-text text-2xl">Rp 2.005.000</span>
+                        </div>
+                        <a href="Verifikasi.html">
+                            <button class="btn-pay w-full py-3.5 text-white flex items-center justify-center gap-2 text-sm mt-1">
+                                Bayar Sekarang
+                                <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+                            </button>
+                        </a>
+                        <div class="flex items-center gap-1.5 justify-center text-white/30 text-[10px] uppercase tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">
+                            <span class="material-symbols-outlined" style="font-size:13px;">lock</span>
+                            Pembayaran Aman & Terenkripsi
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help -->
+                <div class="glass-card rounded-2xl p-4 flex items-center gap-3" style="border-color:rgba(59,130,246,0.2);">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style="background:rgba(59,130,246,0.15);">
+                        <span class="material-symbols-outlined text-blue-400" style="font-size:18px;">help_outline</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold mb-0.5" style="font-family:'Plus Jakarta Sans',sans-serif;">Butuh Bantuan?</p>
+                        <p class="text-white/40 text-xs">Hubungi tim support kami jika ada kendala.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-4 border-t border-white/5 py-8 px-8 opacity-35">
+        <div class="max-w-[1440px] mx-auto flex justify-between items-center">
+            <span class="text-sm" style="font-family:'Plus Jakarta Sans',sans-serif;">SVARA © 2024</span>
+            <div class="flex gap-6 text-[10px] uppercase tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">
+                <a href="#" class="hover:text-purple-400 transition-colors">Syarat & Ketentuan</a>
+                <a href="#" class="hover:text-purple-400 transition-colors">Kebijakan Privasi</a>
+                <a href="#" class="hover:text-purple-400 transition-colors">Hubungi Kami</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SVARA Login - Desktop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7f13ec",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#191022",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>   
+    <style>
+        /* Custom Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(25, 16, 34, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus-within {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: #7f13ec;
+            box-shadow: 0 0 0 1px #7f13ec;
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+
+</head>
+
+<body class="bg-background-dark font-display text-white antialiased selection:bg-primary/50 selection:text-white overflow-y-auto">
+    <div class="relative w-full flex items-center justify-center py-20">
+        <div class="absolute inset-0 z-0 bg-gradient-to-br from-[#0f172a] via-[#191022] to-[#2e1065]"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] rounded-full bg-primary/20 blur-[150px] mix-blend-screen pointer-events-none animate-float"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[700px] h-[700px] rounded-full bg-blue-600/15 blur-[130px] mix-blend-screen pointer-events-none animate-float" style="animation-delay: -3s;"></div>
+
+        <main class="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-24">
+            <div class="hidden md:flex flex-col flex-1 max-w-xl">
+                <div class="mb-8 flex items-center gap-3">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-primary flex items-center justify-center shadow-lg shadow-primary/30 mr-3">
+                        <span class="material-symbols-outlined text-white text-[30px]">graphic_eq</span>
+                    </div>
+                    <h1 class="text-[84px] font-extrabold tracking-tight leading-none text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-primary to-purple-400 drop-shadow-2xl">
+                        SVARA
+                    </h1>
+                </div>
+                <h2 class="text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight mb-6">
+                    Nikmati Harmoni Musik Dalam Satu Genggaman.
+                </h2>
+                <p class="text-white/60 text-lg lg:text-xl font-medium max-w-md">
+                    Tempat terbaik untuk menemukan konser, album eksklusif, dan komunitas pecinta musik sejati.
+                </p>
+                <div class="mt-12 flex gap-4">
+                    <div class="h-1 w-12 bg-primary rounded-full"></div>
+                    <div class="h-1 w-4 bg-white/20 rounded-full"></div>
+                    <div class="h-1 w-4 bg-white/20 rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="w-full max-w-[460px] glass-panel rounded-2xl p-8 lg:p-12 shadow-2xl">
+                <div class="flex flex-col gap-2 mb-8">
+                    <h2 class="text-2xl font-bold tracking-tight text-white">
+                        Selamat Datang Kembali
+                    </h2>
+                    <p class="text-white/50 text-sm font-medium">
+                        Masuk untuk mengakses tiket konser Anda
+                    </p>
+                </div>
+
+                <form class="flex flex-col gap-5 w-full" onsubmit="event.preventDefault()">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-white/70 ml-1" for="email">Email</label>
+                        <div class="glass-input flex items-center w-full rounded-xl overflow-hidden h-14 group">
+                            <div class="pl-4 pr-3 text-white/40 group-focus-within:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-[22px]">mail</span>
+                            </div>
+                            <input class="flex-1 bg-transparent border-none text-white placeholder-white/20 focus:ring-0 text-base font-medium h-full w-full px-0" id="email" placeholder="nama@email.com" type="email" value="" />
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-semibold text-white/70 ml-1" for="password">Kata Sandi</label>
+                        <div class="glass-input flex items-center w-full rounded-xl overflow-hidden h-14 group">
+                            <div class="pl-4 pr-3 text-white/40 group-focus-within:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-[22px]">lock</span>
+                            </div>
+                            <input 
+                                id="password"
+                                class="flex-1 bg-transparent border-none text-white placeholder-white/20 focus:ring-0 text-base font-medium h-full w-full px-0"
+                                placeholder="••••••••"
+                                type="password"
+                            />
+                            <button
+                                id="togglePassword"
+                                class="pr-4 pl-2 text-white/40 hover:text-white transition-colors focus:outline-none"
+                                type="button">
+                                <span
+                                    id="eyeIcon"
+                                    class="material-symbols-outlined text-[22px]">
+                                    visibility
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end -mt-1">
+                        <a class="text-sm font-medium text-white/60 hover:text-primary transition-colors" href="#">
+                            Lupa kata sandi?
+                        </a>
+                    </div>
+
+                    <button class="mt-4 w-full h-14 rounded-xl bg-gradient-to-r from-blue-600 via-primary to-purple-600 hover:brightness-110 active:scale-[0.98] transition-all duration-200 text-white font-bold text-lg shadow-lg shadow-primary/25 flex items-center justify-center gap-2 group" type="submit">
+                        <span>Masuk</span>
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform text-[20px]">arrow_forward</span>
+                    </button>
+                </form>
+
+                <div class="text-center pt-8 border-t border-white/5 mt-8">
+                    <p class="text-white/50 text-sm">
+                        Belum punya akun?
+                        <a class="text-white font-bold hover:underline decoration-primary decoration-2 underline-offset-4 ml-1 transition-all" href="#">
+                            <a href="HomePage.html">Daftar Sekarang</a>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+
+// SHOW / HIDE PASSWORD
+const passwordInput =
+    document.getElementById(
+        "password"
+    );
+const togglePassword =
+    document.getElementById(
+        "togglePassword"
+    );
+const eyeIcon =
+    document.getElementById(
+        "eyeIcon"
+    );
+togglePassword.addEventListener(
+    "click",
+    function () {
+        if (
+            passwordInput.type ===
+            "password"
+        ) {
+            passwordInput.type =
+                "text";
+            eyeIcon.textContent =
+                "visibility_off";
+        }
+        else {
+            passwordInput.type =
+                "password";
+            eyeIcon.textContent =
+                "visibility";
+        }
+    }
+);
+
+// LOGIN ADMIN
+document.querySelector("form")
+.addEventListener(
+    "submit",
+    async function(event) {
+        event.preventDefault();
+        const email =
+            document.getElementById(
+                "email"
+            ).value;
+        const password =
+            document.getElementById(
+                "password"
+            ).value;
+        const data = {
+            email:
+                email,
+            password:
+                password
+        };
+        try {
+            const response =
+                await fetch(
+                    "http://localhost:9999/admin/login",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        body:
+                            JSON.stringify(
+                                data
+                            )
+                    }
+                );
+
+            // LOGIN GAGAL
+            if (
+                response.status === 401
+            ) {
+                alert(
+                    "Email atau Password salah!"
+                );
+                return;
+            }
+
+            // LOGIN BERHASIL
+            alert(
+                "Login berhasil!"
+            );
+            window.location.href =
+                "Admin.html";
+        }
+        catch(error) {
+            console.log(error);
+            alert(
+                "Server error!"
+            );
+        }
+    }
+);
+</script>
+
+</body>
+</html>

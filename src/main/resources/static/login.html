@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SVARA - Login</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/svara.js"></script>
+
+    <style>
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: #050310;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated noise grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-mesh {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 60% 50% at 20% 20%, rgba(127, 19, 236, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 60% at 80% 80%, rgba(0, 245, 255, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 60% 10%, rgba(255, 45, 120, 0.15) 0%, transparent 50%),
+                #050310;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+            animation: float-orb 8s ease-in-out infinite;
+        }
+        .orb-1 { width: 400px; height: 400px; background: rgba(127,19,236,0.2); top: -100px; right: -100px; animation-delay: 0s; }
+        .orb-2 { width: 300px; height: 300px; background: rgba(0,245,255,0.1); bottom: -50px; left: -50px; animation-delay: -3s; }
+        .orb-3 { width: 200px; height: 200px; background: rgba(255,45,120,0.15); top: 50%; left: 10%; animation-delay: -5s; }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: white;
+            transition: all 0.25s ease;
+            font-family: "DM Sans", sans-serif;
+        }
+        .input-field:focus {
+            background: rgba(127, 19, 236, 0.08);
+            border-color: rgba(127, 19, 236, 0.6);
+            box-shadow: 0 0 0 3px rgba(127, 19, 236, 0.1), 0 0 20px rgba(127, 19, 236, 0.1);
+            outline: none;
+        }
+        .input-field::placeholder { color: rgba(255,255,255,0.25); }
+
+        /* Neon glow btn */
+        .btn-neon {
+            background: linear-gradient(135deg, #7f13ec, #bf5af2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            font-family: "Syne", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(135deg, #ff2d78, #7f13ec, #00f5ff);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-neon:hover::before { opacity: 1; }
+        .btn-neon:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(127,19,236,0.5); }
+        .btn-neon:active { transform: translateY(0); }
+
+        .logo-text {
+            font-family: "Syne", sans-serif;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #bf5af2 50%, #00f5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animated underline on labels */
+        .field-label {
+            font-family: "Syne", sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Slide up animation */
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: slide-up 0.6s ease forwards; }
+        .animate-in-delay-1 { animation: slide-up 0.6s 0.1s ease both; opacity:0; }
+        .animate-in-delay-2 { animation: slide-up 0.6s 0.2s ease both; opacity:0; }
+        .animate-in-delay-3 { animation: slide-up 0.6s 0.3s ease both; opacity:0; }
+        .animate-in-delay-4 { animation: slide-up 0.6s 0.4s ease both; opacity:0; }
+        .animate-in-delay-5 { animation: slide-up 0.6s 0.5s ease both; opacity:0; }
+        .animate-in-delay-6 { animation: slide-up 0.6s 0.6s ease both; opacity:0; }
+
+        /* Tag chip */
+        .chip {
+            font-family: "Syne", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(127, 19, 236, 0.4);
+            color: rgba(191, 90, 242, 0.9);
+            background: rgba(127, 19, 236, 0.1);
+        }
+
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* Neon divider */
+        .neon-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(127,19,236,0.5), transparent);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen w-full flex items-center justify-center relative overflow-y-auto text-white selection:bg-purple-600 selection:text-white py-10">
+    <div class="bg-mesh"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Container -->
+    <div class="relative w-full max-w-[440px] flex flex-col justify-center px-6 z-10">
+
+        <!-- Logo + Header -->
+        <div class="flex flex-col items-center text-center mb-8 animate-in">
+            <div class="mb-6 relative">
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center relative" style="background: linear-gradient(135deg, #7f13ec, #bf5af2); box-shadow: 0 0 40px rgba(127,19,236,0.5);">
+                    <span class="material-symbols-outlined text-white" style="font-size: 32px; font-variation-settings: 'FILL' 1, 'wght' 500;">graphic_eq</span>
+                </div>
+                <!-- Pulse ring -->
+                <div class="absolute inset-0 rounded-2xl border-2 border-purple-500/30 animate-ping" style="animation-duration:2s;"></div>
+            </div>
+            <h1 class="logo-text text-5xl mb-1">SVARA</h1>
+            <span class="chip mb-4">Concert Ticketing</span>
+            <h2 class="text-white font-bold text-2xl leading-tight mb-2" style="font-family: 'Syne', sans-serif;">Join the vibe 🎵</h2>
+            <p class="text-sm" style="color: rgba(255,255,255,0.45);">Your concert era starts right here.</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="glass-card rounded-3xl p-7 w-full shadow-2xl flex flex-col gap-5 animate-in-delay-1" style="box-shadow: 0 0 60px rgba(127,19,236,0.08), 0 20px 60px rgba(0,0,0,0.4);">
+
+            <!-- Real Name -->
+            <div class="flex flex-col gap-2 animate-in-delay-2">
+                <label class="field-label">Real Name</label>
+                <div class="flex w-full items-center rounded-2xl overflow-hidden h-12 group input-field">
+                    <input
+                        id="nama"
+                        class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium"
+                        placeholder="e.g. Post Malone"
+                        type="text"
+                        style="font-family: 'DM Sans', sans-serif;" />
+                    <div class="pr-3 text-white/20 group-focus-within:text-purple-400 transition-colors">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="flex flex-col gap-2 animate-in-delay-2">
+                <label class="field-label">Email</label>
+                <div class="flex w-full items-center rounded-2xl overflow-hidden h-12 group input-field">
+                    <input
+                        id="email"
+                        class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium"
+                        placeholder="yourname@gmail.com"
+                        type="email" required
+                        style="font-family: 'DM Sans', sans-serif;" />
+                    <div class="pr-3 text-white/20 group-focus-within:text-purple-400 transition-colors">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">mail</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="flex flex-col gap-2 animate-in-delay-3">
+                <label class="field-label">Password</label>
+                <div class="flex w-full items-center rounded-2xl overflow-hidden h-12 group input-field">
+                    <input
+                        id="password"
+                        class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium"
+                        placeholder="Something secret..."
+                        type="password"
+                        style="font-family: 'DM Sans', sans-serif;" />
+                    <button
+                        type="button"
+                        onclick="togglePassword()"
+                        class="pr-3 text-white/20 hover:text-purple-400 transition-colors focus:outline-none">
+                        <span id="iconPassword" class="material-symbols-outlined" style="font-size: 18px;">lock</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="flex flex-col gap-2 animate-in-delay-3">
+                <label class="field-label">Cell</label>
+                <div class="flex w-full items-center rounded-2xl overflow-hidden h-12 group input-field">
+                    <div class="pl-4 pr-3 text-white/50 font-bold text-sm border-r border-white/10 h-full flex items-center" style="font-family: 'Syne', sans-serif;">+62</div>
+                    <input
+                        id="telepon"
+                        class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium"
+                        placeholder="812-3456-7890"
+                        type="tel" maxlength="13" required
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                        style="font-family: 'DM Sans', sans-serif;" />
+                    <div class="pr-3 text-white/20 group-focus-within:text-purple-400 transition-colors">
+                        <span class="material-symbols-outlined" style="font-size: 18px;">call</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Birth Date -->
+            <div class="flex flex-col gap-2 animate-in-delay-4">
+                <label class="field-label">Born</label>
+                <div class="flex w-full items-center rounded-2xl overflow-hidden h-12 group input-field">
+                    <input
+                        id="tanggalLahir"
+                        class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium dark:[color-scheme:dark]"
+                        type="date"
+                        style="font-family: 'DM Sans', sans-serif;" />
+                </div>
+            </div>
+
+            <!-- Neon divider -->
+            <div class="neon-line animate-in-delay-4"></div>
+
+            <!-- Submit Button -->
+            <button
+                id="btnDaftar"
+                class="btn-neon w-full h-12 rounded-2xl text-white flex items-center justify-center gap-2 animate-in-delay-5"
+                type="button">
+                <span class="text-base">Let's Go</span>
+                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+            </button>
+
+            <p class="text-center text-xs animate-in-delay-6" style="color: rgba(255,255,255,0.3); font-family: 'DM Sans', sans-serif;">
+                By joining, you're in for the best concert drops 🎤
+            </p>
+        </div>
+
+        <!-- Bottom brand watermark -->
+        <p class="text-center mt-6 text-xs animate-in-delay-6" style="color: rgba(255,255,255,0.18); font-family: 'Syne', sans-serif; letter-spacing: 0.15em;">
+            SVARA © 2024
+        </p>
+    </div>
+
+    <script>
+    function togglePassword() {
+        const input = document.getElementById("password");
+        const icon = document.getElementById("iconPassword");
+        if (input.type === "password") {
+            input.type = "text";
+            icon.textContent = "lock_open";
+        } else {
+            input.type = "password";
+            icon.textContent = "lock";
+        }
+    }
+
+    document.getElementById("btnDaftar").addEventListener("click", async function () {
+        const nama = document.getElementById("nama").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const telepon = document.getElementById("telepon").value.trim();
+        const tanggalLahir = document.getElementById("tanggalLahir").value;
+        const password = document.getElementById("password").value;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!nama) {
+            alert("Nama lengkap wajib diisi!");
+            document.getElementById("nama").focus();
+            return;
+        }
+
+        if (!email) {
+            alert("Email wajib diisi!");
+            document.getElementById("email").focus();
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            alert("Format email tidak valid! Harus mengandung @");
+            document.getElementById("email").focus();
+            return;
+        }
+
+        if (!password) {
+            alert("Password wajib diisi!");
+            document.getElementById("password").focus();
+            return;
+        }
+
+        if (!telepon) {
+            alert("Nomor telepon wajib diisi!");
+            document.getElementById("telepon").focus();
+            return;
+        }
+
+        if (!tanggalLahir) {
+            alert("Tanggal lahir wajib diisi!");
+            document.getElementById("tanggalLahir").focus();
+            return;
+        }
+
+        const data = {
+            nama: nama,
+            email: email,
+            nomorTelepon: telepon,
+            tanggalLahir: tanggalLahir,
+            password: password
+        };
+
+        try {
+            const response = await fetch("http://localhost:9999/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                const user = await response.json();
+                sessionStorage.setItem("userId", user.id);
+                sessionStorage.setItem("userNama", user.nama);
+                window.location.href = "HomePage.html";
+            } else {
+                alert("Gagal menyimpan data! Silakan coba lagi.");
+            }
+        } catch (error) {
+            alert("Tidak dapat terhubung ke server. Pastikan server berjalan di port 9999.");
+            console.error(error);
+        }
+    });
+    </script>
+</body>
+</html>
