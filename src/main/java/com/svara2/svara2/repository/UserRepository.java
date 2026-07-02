@@ -6,5 +6,8 @@ import com.svara2.svara2.Model.User;
 
 public interface UserRepository
         extends JpaRepository<User, Integer> {
-
+                
+        User findByEmailAndPassword(
+                String email,
+                String password);       
 }

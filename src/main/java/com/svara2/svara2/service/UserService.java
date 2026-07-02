@@ -20,6 +20,17 @@ public class UserService {
                 .save(user);
     }
 
+    // LOGIN USER
+    public User loginUser(
+            String email,
+            String password) {
+        return userRepository
+                .findByEmailAndPassword(
+                        email,
+                        password
+                );
+    }
+    
     // GET ALL USERS
     public List<User> getAllUsers() {
         return userRepository

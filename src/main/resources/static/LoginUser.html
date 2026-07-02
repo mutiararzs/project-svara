@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>SVARA - Login</title>
+    <title>SVARA - Masuk</title>
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -13,7 +13,7 @@
 
     <style>
         * { box-sizing: border-box; }
-        
+
         body {
             font-family: "DM Sans", sans-serif;
             background: #050310;
@@ -34,7 +34,7 @@
         .bg-mesh {
             position: fixed;
             inset: 0;
-            background: 
+            background:
                 radial-gradient(ellipse 60% 50% at 20% 20%, rgba(127, 19, 236, 0.25) 0%, transparent 60%),
                 radial-gradient(ellipse 50% 60% at 80% 80%, rgba(0, 245, 255, 0.12) 0%, transparent 60%),
                 radial-gradient(ellipse 40% 40% at 60% 10%, rgba(255, 45, 120, 0.15) 0%, transparent 50%),
@@ -74,7 +74,7 @@
             transition: all 0.25s ease;
             font-family: "DM Sans", sans-serif;
         }
-        .input-field:focus {
+        .input-field:focus-within {
             background: rgba(127, 19, 236, 0.08);
             border-color: rgba(127, 19, 236, 0.6);
             box-shadow: 0 0 0 3px rgba(127, 19, 236, 0.1), 0 0 20px rgba(127, 19, 236, 0.1);
@@ -102,9 +102,13 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
+        .btn-neon::after {
+            content: '';
+        }
         .btn-neon:hover::before { opacity: 1; }
         .btn-neon:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(127,19,236,0.5); }
         .btn-neon:active { transform: translateY(0); }
+        .btn-neon:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
         .logo-text {
             font-family: "Syne", sans-serif;
@@ -136,7 +140,6 @@
         .animate-in-delay-3 { animation: slide-up 0.6s 0.3s ease both; opacity:0; }
         .animate-in-delay-4 { animation: slide-up 0.6s 0.4s ease both; opacity:0; }
         .animate-in-delay-5 { animation: slide-up 0.6s 0.5s ease both; opacity:0; }
-        .animate-in-delay-6 { animation: slide-up 0.6s 0.6s ease both; opacity:0; }
 
         /* Tag chip */
         .chip {
@@ -182,28 +185,12 @@
             </div>
             <h1 class="logo-text text-5xl mb-1">SVARA</h1>
             <span class="chip mb-4">Concert Ticketing</span>
-            <h2 class="text-white font-bold text-2xl leading-tight mb-2" style="font-family: 'Syne', sans-serif;">Join the vibe 🎵</h2>
-            <p class="text-sm" style="color: rgba(255,255,255,0.45);">Your concert era starts right here.</p>
+            <h2 class="text-white font-bold text-2xl leading-tight mb-2" style="font-family: 'Syne', sans-serif;">Welcome back 👋</h2>
+            <p class="text-sm" style="color: rgba(255,255,255,0.45);">Sign in to keep the music going.</p>
         </div>
 
         <!-- Form Card -->
-        <div class="glass-card rounded-3xl p-7 w-full shadow-2xl flex flex-col gap-5 animate-in-delay-1" style="box-shadow: 0 0 60px rgba(127,19,236,0.08), 0 20px 60px rgba(0,0,0,0.4);">
-
-            <!-- Real Name -->
-            <div class="flex flex-col gap-2 animate-in-delay-2">
-                <label class="field-label">Real Name</label>
-                <div class="flex w-full items-center rounded-2xl overflow-hidden h-12 group input-field">
-                    <input
-                        id="nama"
-                        class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium"
-                        placeholder="e.g. Post Malone"
-                        type="text"
-                        style="font-family: 'DM Sans', sans-serif;" />
-                    <div class="pr-3 text-white/20 group-focus-within:text-purple-400 transition-colors">
-                        <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
-                    </div>
-                </div>
-            </div>
+        <form id="formLoginUser" class="glass-card rounded-3xl p-7 w-full shadow-2xl flex flex-col gap-5 animate-in-delay-1" style="box-shadow: 0 0 60px rgba(127,19,236,0.08), 0 20px 60px rgba(0,0,0,0.4);" onsubmit="event.preventDefault();">
 
             <!-- Email -->
             <div class="flex flex-col gap-2 animate-in-delay-2">
@@ -229,7 +216,7 @@
                         id="password"
                         class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium"
                         placeholder="Something secret..."
-                        type="password"
+                        type="password" required
                         style="font-family: 'DM Sans', sans-serif;" />
                     <button
                         type="button"
@@ -240,34 +227,10 @@
                 </div>
             </div>
 
-            <!-- Phone -->
-            <div class="flex flex-col gap-2 animate-in-delay-3">
-                <label class="field-label">Cell</label>
-                <div class="flex w-full items-center rounded-2xl overflow-hidden h-12 group input-field">
-                    <div class="pl-4 pr-3 text-white/50 font-bold text-sm border-r border-white/10 h-full flex items-center" style="font-family: 'Syne', sans-serif;">+62</div>
-                    <input
-                        id="telepon"
-                        class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium"
-                        placeholder="812-3456-7890"
-                        type="tel" maxlength="13" required
-                        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-                        style="font-family: 'DM Sans', sans-serif;" />
-                    <div class="pr-3 text-white/20 group-focus-within:text-purple-400 transition-colors">
-                        <span class="material-symbols-outlined" style="font-size: 18px;">call</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Birth Date -->
-            <div class="flex flex-col gap-2 animate-in-delay-4">
-                <label class="field-label">Born</label>
-                <div class="flex w-full items-center rounded-2xl overflow-hidden h-12 group input-field">
-                    <input
-                        id="tanggalLahir"
-                        class="flex-1 bg-transparent border-none text-white placeholder-gray-500 px-4 h-full focus:ring-0 text-sm font-medium dark:[color-scheme:dark]"
-                        type="date"
-                        style="font-family: 'DM Sans', sans-serif;" />
-                </div>
+            <div class="flex justify-end -mt-1 animate-in-delay-3">
+                <a class="text-xs font-medium transition-colors hover:text-purple-400" style="color: rgba(255,255,255,0.4);" href="#">
+                    Forgot Password?
+                </a>
             </div>
 
             <!-- Neon divider -->
@@ -275,24 +238,21 @@
 
             <!-- Submit Button -->
             <button
-                id="btnDaftar"
-                class="btn-neon w-full h-12 rounded-2xl text-white flex items-center justify-center gap-2 animate-in-delay-5"
-                type="button">
-                <span class="text-base">Let's Go</span>
+                id="btnMasuk"
+                class="btn-neon w-full h-12 rounded-2xl text-white flex items-center justify-center gap-2 animate-in-delay-4"
+                type="submit">
+                <span class="text-base">Log In</span>
                 <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
             </button>
 
-            <p class="text-center text-xs animate-in-delay-6" style="color: rgba(255,255,255,0.4); font-family: 'DM Sans', sans-serif;">
-                Got an account? 
-                <a href="LoginUser.html" class="font-bold hover:underline" style="color: rgba(255,255,255,0.8); text-decoration-color: #7f13ec;">Log In.</a>
+            <p class="text-center text-xs animate-in-delay-5" style="color: rgba(255,255,255,0.3); font-family: 'DM Sans', sans-serif;">
+                New here? 
+                <a href="login.html" class="font-bold hover:underline" style="color: rgba(255,255,255,0.7); text-decoration-color: #7f13ec;">Join the crowd.</a>
             </p>
-            <p class="text-center text-xs animate-in-delay-6" style="color: rgba(255,255,255,0.3); font-family: 'DM Sans', sans-serif;">
-                By joining, you're in for the best concert drops 🎤
-            </p>
-        </div>
+        </form>
 
         <!-- Bottom brand watermark -->
-        <p class="text-center mt-6 text-xs animate-in-delay-6" style="color: rgba(255,255,255,0.18); font-family: 'Syne', sans-serif; letter-spacing: 0.15em;">
+        <p class="text-center mt-6 text-xs animate-in-delay-5" style="color: rgba(255,255,255,0.18); font-family: 'Syne', sans-serif; letter-spacing: 0.15em;">
             SVARA © 2026
         </p>
     </div>
@@ -310,29 +270,16 @@
         }
     }
 
-    document.getElementById("btnDaftar").addEventListener("click", async function () {
-        const nama = document.getElementById("nama").value.trim();
+    // LOGIN USER
+    document.getElementById("formLoginUser").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
         const email = document.getElementById("email").value.trim();
-        const telepon = document.getElementById("telepon").value.trim();
-        const tanggalLahir = document.getElementById("tanggalLahir").value;
         const password = document.getElementById("password").value;
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!nama) {
-            alert("Nama lengkap wajib diisi!");
-            document.getElementById("nama").focus();
-            return;
-        }
+        const btnMasuk = document.getElementById("btnMasuk");
 
         if (!email) {
             alert("Email wajib diisi!");
-            document.getElementById("email").focus();
-            return;
-        }
-
-        if (!emailRegex.test(email)) {
-            alert("Format email tidak valid! Harus mengandung @");
             document.getElementById("email").focus();
             return;
         }
@@ -343,44 +290,44 @@
             return;
         }
 
-        if (!telepon) {
-            alert("Nomor telepon wajib diisi!");
-            document.getElementById("telepon").focus();
-            return;
-        }
-
-        if (!tanggalLahir) {
-            alert("Tanggal lahir wajib diisi!");
-            document.getElementById("tanggalLahir").focus();
-            return;
-        }
-
         const data = {
-            nama: nama,
             email: email,
-            nomorTelepon: telepon,
-            tanggalLahir: tanggalLahir,
             password: password
         };
 
+        btnMasuk.disabled = true;
+
         try {
-            const response = await fetch("http://localhost:9999/register", {
+            const response = await fetch("http://localhost:9999/user/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             });
 
-            if (response.ok) {
-                const user = await response.json();
-                sessionStorage.setItem("userId", user.id);
-                sessionStorage.setItem("userNama", user.nama);
-                window.location.href = "HomePage.html";
-            } else {
-                alert("Gagal menyimpan data! Silakan coba lagi.");
+            // LOGIN GAGAL
+            if (response.status === 401) {
+                alert("Email atau Password salah!");
+                btnMasuk.disabled = false;
+                return;
             }
+
+            if (!response.ok) {
+                alert("Gagal login! Silakan coba lagi.");
+                btnMasuk.disabled = false;
+                return;
+            }
+
+            // LOGIN BERHASIL
+            const user = await response.json();
+            sessionStorage.setItem("userId", user.id);
+            sessionStorage.setItem("userNama", user.nama);
+            sessionStorage.setItem("userEmail", user.email);
+
+            window.location.href = "HomePage.html";
         } catch (error) {
             alert("Tidak dapat terhubung ke server. Pastikan server berjalan di port 9999.");
             console.error(error);
+            btnMasuk.disabled = false;
         }
     });
     </script>

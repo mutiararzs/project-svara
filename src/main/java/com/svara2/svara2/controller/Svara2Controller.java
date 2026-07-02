@@ -60,6 +60,28 @@ public class Svara2Controller {
                 .simpanUser(user);
     }
 
+    // LOGIN USER
+    @PostMapping("/user/login")
+    public ResponseEntity<?> loginUser(
+        @RequestBody User user) {
+    User cekUser =
+            userService.loginUser(
+                    user.getEmail(),
+                    user.getPassword()
+            );
+
+    // LOGIN BERHASIL
+    if (cekUser != null) {
+        return ResponseEntity
+                .ok(cekUser);
+    }
+
+    // LOGIN GAGAL
+    return ResponseEntity
+            .status(401)
+            .body("Email atau password salah");
+}
+
     // GET ALL USERS
     @GetMapping("/users")
     public List<User> getAllUsers() {
