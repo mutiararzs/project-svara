@@ -45,6 +45,11 @@
         }
     </script>
     <script>
+    // CEK VALIDASI LOGIN ADMIN (Taruh di paling atas)
+    if (sessionStorage.getItem("isAdminLoggedIn") !== "true") {
+        alert("Akses ditolak! Anda harus login sebagai Admin terlebih dahulu.");
+        window.location.href = "LoginAdmin.html"; // Tendang kembali ke halaman login admin
+    }
     // Ambil basis URL dari domain Railway kamu yang sudah online
     const BASE_URL = "https://project-svara-production.up.railway.app";
 
@@ -187,7 +192,7 @@ body {
                     <p class="text-sm font-bold truncate">Admin Svara</p>
                     <p class="text-xs text-white/40 truncate">Super Admin</p>
                 </div>
-                <button class="text-white/40 hover:text-error-rose transition-colors">
+                <button onclick="logoutAdmin()" class="text-white/40 hover:text-error-rose transition-colors" title="Logout">
                     <span class="material-symbols-outlined text-xl">logout</span>
                 </button>
             </div>

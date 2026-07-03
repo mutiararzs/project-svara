@@ -259,8 +259,9 @@ document.querySelector("form")
             alert(
                 "Login berhasil!"
             );
-            window.location.href =
-                "Admin.html";
+            // Menyimpan tanda bahwa yang masuk adalah admin
+            sessionStorage.setItem("isAdminLoggedIn", "true"); 
+            window.location.href = "Admin.html";
         }
         catch(error) {
             console.log(error);
@@ -268,6 +269,22 @@ document.querySelector("form")
                 "Tidak dapat terhubung ke server. Silakan periksa koneksi internet Anda."
             );
         }
+        // PERUBAHAN 2: FUNGSI LOGOUT ADMIN
+        function logoutAdmin() {
+        // Hapus token session admin dari browser
+        sessionStorage.removeItem("isAdminLoggedIn");
+        alert("Berhasil keluar dari akun Admin.");
+        window.location.href = "LoginAdmin.html";
+        }
+
+        // AUTO LOAD SAAT HALAMAN DIBUKA
+        document.addEventListener("DOMContentLoaded", () => {
+            loadUsers();
+    
+        // Mengatur tanggal secara dinamis sesuai hari ini
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById("current-date").textContent = new Date().toLocaleDateString('id-ID', options);
+        });
     }
 );
 </script>
