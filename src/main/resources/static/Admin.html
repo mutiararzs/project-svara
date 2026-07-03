@@ -45,11 +45,12 @@
         }
     </script>
     <script>
+    // Ambil basis URL dari domain Railway kamu yang sudah online
+    const BASE_URL = "https://project-svara-production.up.railway.app";
+
     async function loadUsers() {
         const response =
-            await fetch(
-                "http://localhost:9999/users"
-            );
+            await fetch(`${BASE_URL}/users`);
         const users =
             await response.json();
         const tableBody =
@@ -98,12 +99,9 @@
 
 // DELETE USER
     async function deleteUser(id) {
-        await fetch(
-            `http://localhost:9999/users/${id}`,
-            {
-                method: "DELETE"
-            }
-        );
+        await fetch(`${BASE_URL}/users/${id}`, {
+            method: "DELETE"
+        });
         loadUsers();
     }
 
@@ -118,7 +116,7 @@
         const tanggalLahir =
             prompt("Tanggal lahir baru");
         await fetch(
-            `http://localhost:9999/users/${id}`,
+            `${BASE_URL}/users/${id}`,
             {
                 method: "PUT",
                 headers: {

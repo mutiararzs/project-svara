@@ -258,6 +258,9 @@
     </div>
 
     <script>
+    // Ambil basis URL dari domain Railway kamu yang sudah online
+    const BASE_URL = "https://project-svara-production.up.railway.app";
+
     function togglePassword() {
         const input = document.getElementById("password");
         const icon = document.getElementById("iconPassword");
@@ -298,7 +301,7 @@
         btnMasuk.disabled = true;
 
         try {
-            const response = await fetch("http://localhost:9999/user/login", {
+            const response = await fetch(`${BASE_URL}/user/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
@@ -325,7 +328,7 @@
 
             window.location.href = "HomePage.html";
         } catch (error) {
-            alert("Tidak dapat terhubung ke server. Pastikan server berjalan di port 9999.");
+            alert("Tidak dapat terhubung ke server. Silakan periksa koneksi internet Anda atau coba lagi nanti.");
             console.error(error);
             btnMasuk.disabled = false;
         }

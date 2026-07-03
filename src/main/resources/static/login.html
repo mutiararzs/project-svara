@@ -298,6 +298,8 @@
     </div>
 
     <script>
+    const BASE_URL = "https://project-svara-production.up.railway.app";
+
     function togglePassword() {
         const input = document.getElementById("password");
         const icon = document.getElementById("iconPassword");
@@ -364,7 +366,7 @@
         };
 
         try {
-            const response = await fetch("http://localhost:9999/register", {
+            const response = await fetch(`${BASE_URL}/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
@@ -379,7 +381,7 @@
                 alert("Gagal menyimpan data! Silakan coba lagi.");
             }
         } catch (error) {
-            alert("Tidak dapat terhubung ke server. Pastikan server berjalan di port 9999.");
+            alert("Koneksi ke server gagal. Pastikan internet Anda aktif.");
             console.error(error);
         }
     });

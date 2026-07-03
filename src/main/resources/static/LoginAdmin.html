@@ -172,6 +172,7 @@
     </div>
 
 <script>
+const BASE_URL = "https://project-svara-production.up.railway.app";
 
 // SHOW / HIDE PASSWORD
 const passwordInput =
@@ -230,7 +231,7 @@ document.querySelector("form")
         try {
             const response =
                 await fetch(
-                    "http://localhost:9999/admin/login",
+                    `${BASE_URL}/admin/login`,
                     {
                         method: "POST",
                         headers: {
@@ -264,7 +265,7 @@ document.querySelector("form")
         catch(error) {
             console.log(error);
             alert(
-                "Server error!"
+                "Tidak dapat terhubung ke server. Silakan periksa koneksi internet Anda."
             );
         }
     }
