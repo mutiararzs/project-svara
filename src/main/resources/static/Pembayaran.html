@@ -128,6 +128,11 @@
             font-family: "Plus Jakarta Sans", sans-serif;
         }
         .pay-pill:hover { background: rgba(127,19,236,0.2); border-color: rgba(127,19,236,0.4); }
+        .pay-pill-selected {
+            background: rgba(127,19,236,0.35) !important;
+            border-color: #7f13ec !important;
+            box-shadow: 0 0 0 1px rgba(127,19,236,0.4);
+        }
 
         /* Pay now button */
         .btn-pay {
@@ -236,7 +241,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <!-- Festival A -->
-                    <div class="ticket-cat relative" style="border-left: 3px solid #3b82f6;">
+                    <div class="ticket-cat relative" data-kategori="Festival A" data-harga="1500000" style="border-left: 3px solid #3b82f6;">
                         <div class="flex justify-between items-start mb-3">
                             <div>
                                 <h3 class="font-bold text-base mb-0.5" style="font-family:'Plus Jakarta Sans',sans-serif;">Festival A</h3>
@@ -248,11 +253,13 @@
                             <span class="material-symbols-outlined text-emerald-400" style="font-size:15px;">verified</span>
                             <span class="text-emerald-400 text-xs">Dekat panggung utama</span>
                         </div>
-                        <button class="w-full py-2.5 rounded-xl border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider hover:bg-blue-500/10 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                        <div class="cat-footer">
+                            <button class="w-full py-2.5 rounded-xl border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider hover:bg-blue-500/10 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                        </div>
                     </div>
 
                     <!-- Tribune Gold (Selected) -->
-                    <div class="ticket-cat selected relative" style="border-left: 3px solid #fbbf24;">
+                    <div class="ticket-cat selected relative" data-kategori="Tribune Gold" data-harga="850000" style="border-left: 3px solid #fbbf24;">
                         <div class="flex justify-between items-start mb-3">
                             <div>
                                 <h3 class="font-bold text-base mb-0.5 text-yellow-400" style="font-family:'Plus Jakarta Sans',sans-serif;">Tribune Gold ✨</h3>
@@ -264,18 +271,18 @@
                             <span class="material-symbols-outlined text-blue-400" style="font-size:15px;">visibility</span>
                             <span class="text-blue-400 text-xs">View tengah stadion</span>
                         </div>
-                        <div class="flex items-center justify-between">
+                        <div class="cat-footer flex items-center justify-between">
                             <span class="label-text text-yellow-400/70">Terpilih</span>
                             <div class="qty-ctrl">
-                                <div class="qty-btn"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">remove</span></div>
-                                <span class="w-10 text-center text-sm font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">2</span>
-                                <div class="qty-btn"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">add</span></div>
+                                <div class="qty-btn qty-minus"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">remove</span></div>
+                                <span class="w-10 text-center text-sm font-bold qty-value" style="font-family:'Plus Jakarta Sans',sans-serif;">2</span>
+                                <div class="qty-btn qty-plus"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">add</span></div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Tribune Silver -->
-                    <div class="ticket-cat relative" style="border-left: 3px solid rgba(255,255,255,0.2);">
+                    <div class="ticket-cat relative" data-kategori="Tribune Silver" data-harga="650000" style="border-left: 3px solid rgba(255,255,255,0.2);">
                         <div class="flex justify-between items-start mb-3">
                             <div>
                                 <h3 class="font-bold text-base mb-0.5" style="font-family:'Plus Jakarta Sans',sans-serif;">Tribune Silver</h3>
@@ -287,7 +294,9 @@
                             <span class="material-symbols-outlined text-white/35" style="font-size:15px;">side_navigation</span>
                             <span class="text-white/40 text-xs">Sayap kiri/kanan</span>
                         </div>
-                        <button class="w-full py-2.5 rounded-xl border border-white/10 text-white/50 text-xs font-bold uppercase tracking-wider hover:bg-white/5 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                        <div class="cat-footer">
+                            <button class="w-full py-2.5 rounded-xl border border-white/10 text-white/50 text-xs font-bold uppercase tracking-wider hover:bg-white/5 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                        </div>
                     </div>
 
                     <!-- Festival B - Sold Out -->
@@ -328,22 +337,22 @@
                 <div class="glass-card rounded-2xl p-5 space-y-3">
                     <h3 class="text-sm font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Metode Pembayaran 💳</h3>
                     <div class="space-y-2.5">
-                        <div class="p-3 rounded-xl bg-white/2 cursor-pointer hover:bg-purple-500/5 hover:border-purple-500/20 transition-all">
+                        <div class="p-3 rounded-xl bg-white/2 hover:bg-purple-500/5 hover:border-purple-500/20 transition-all">
                             <p class="label-text mb-2">E-Wallet</p>
                             <div class="flex gap-2 flex-wrap">
-                                <span class="pay-pill">GoPay</span>
-                                <span class="pay-pill">OVO</span>
-                                <span class="pay-pill">DANA</span>
+                                <span class="pay-pill" data-metode="GoPay">GoPay</span>
+                                <span class="pay-pill" data-metode="OVO">OVO</span>
+                                <span class="pay-pill" data-metode="DANA">DANA</span>
                             </div>
                         </div>
-                        <div class="p-3 rounded-xl bg-white/2 cursor-pointer hover:bg-purple-500/5 hover:border-purple-500/20 transition-all">
+                        <div class="p-3 rounded-xl bg-white/2 hover:bg-purple-500/5 hover:border-purple-500/20 transition-all">
                             <p class="label-text mb-2">Virtual Account</p>
                             <div class="flex gap-2">
-                                <span class="pay-pill">BCA</span>
-                                <span class="pay-pill">Mandiri</span>
+                                <span class="pay-pill" data-metode="Virtual Account BCA">BCA</span>
+                                <span class="pay-pill" data-metode="Virtual Account Mandiri">Mandiri</span>
                             </div>
                         </div>
-                        <div class="p-3 rounded-xl bg-white/2 cursor-pointer hover:bg-purple-500/5 hover:border-purple-500/20 transition-all flex items-center justify-between">
+                        <div class="p-3 rounded-xl bg-white/2 cursor-pointer hover:bg-purple-500/5 hover:border-purple-500/20 transition-all flex items-center justify-between pay-pill" data-metode="QRIS">
                             <p class="label-text">QRIS</p>
                             <span class="material-symbols-outlined text-blue-400" style="font-size:20px;">qr_code_2</span>
                         </div>
@@ -357,32 +366,30 @@
                     <div class="space-y-3">
                         <div class="flex justify-between items-start">
                             <div>
-                                <p class="text-sm font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Tribune Gold</p>
-                                <p class="text-white/40 text-xs">2 Tiket × Rp 850.000</p>
+                                <p class="text-sm font-bold" id="ringkasan-kategori" style="font-family:'Plus Jakarta Sans',sans-serif;">Tribune Gold</p>
+                                <p class="text-white/40 text-xs" id="ringkasan-detail">2 Tiket × Rp 850.000</p>
                             </div>
-                            <p class="text-sm font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Rp 1.700.000</p>
+                            <p class="text-sm font-bold" id="ringkasan-subtotal" style="font-family:'Plus Jakarta Sans',sans-serif;">Rp 1.700.000</p>
                         </div>
                         <div class="flex justify-between text-white/40 text-xs">
                             <p>Biaya Layanan</p>
-                            <p>Rp 50.000</p>
+                            <p id="ringkasan-biaya">Rp 50.000</p>
                         </div>
                         <div class="flex justify-between text-white/40 text-xs">
                             <p>Pajak Hiburan (15%)</p>
-                            <p>Rp 255.000</p>
+                            <p id="ringkasan-pajak">Rp 255.000</p>
                         </div>
                     </div>
 
                     <div class="pt-4 border-t border-white/6 space-y-4">
                         <div class="flex justify-between items-end">
                             <span class="text-white/60 text-sm">Total Pembayaran</span>
-                            <span class="price-text text-2xl">Rp 2.005.000</span>
+                            <span class="price-text text-2xl" id="ringkasan-total">Rp 2.005.000</span>
                         </div>
-                        <a href="Verifikasi.html">
-                            <button class="btn-pay w-full py-3.5 text-white flex items-center justify-center gap-2 text-sm mt-1">
-                                Bayar Sekarang
-                                <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
-                            </button>
-                        </a>
+                        <button id="btn-bayar-sekarang" class="btn-pay w-full py-3.5 text-white flex items-center justify-center gap-2 text-sm mt-1">
+                            Bayar Sekarang
+                            <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+                        </button>
                         <div class="flex items-center gap-1.5 justify-center text-white/30 text-[10px] uppercase tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">
                             <span class="material-symbols-outlined" style="font-size:13px;">lock</span>
                             Pembayaran Aman & Terenkripsi
@@ -415,5 +422,141 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        const BASE_URL = window.location.origin;
+
+        // Format angka ke Rupiah, mis. 1700000 -> "Rp 1.700.000"
+        function formatRupiah(angka) {
+            return "Rp " + Math.round(angka).toLocaleString("id-ID");
+        }
+
+        // State pilihan saat ini
+        let kategoriTerpilih = document.querySelector(".ticket-cat.selected");
+        let qty = 2;
+
+        const BIAYA_LAYANAN = 50000;
+        const PAJAK_PERSEN = 0.15;
+
+        function hitungDanTampilkanRingkasan() {
+            if (!kategoriTerpilih) return;
+
+            const namaKategori = kategoriTerpilih.dataset.kategori;
+            const harga = parseInt(kategoriTerpilih.dataset.harga, 10);
+            const subtotal = harga * qty;
+            const pajak = subtotal * PAJAK_PERSEN;
+            const total = subtotal + BIAYA_LAYANAN + pajak;
+
+            document.getElementById("ringkasan-kategori").textContent = namaKategori;
+            document.getElementById("ringkasan-detail").textContent =
+                qty + " Tiket × " + formatRupiah(harga);
+            document.getElementById("ringkasan-subtotal").textContent = formatRupiah(subtotal);
+            document.getElementById("ringkasan-biaya").textContent = formatRupiah(BIAYA_LAYANAN);
+            document.getElementById("ringkasan-pajak").textContent = formatRupiah(pajak);
+            document.getElementById("ringkasan-total").textContent = formatRupiah(total);
+        }
+
+        // 1. Pilih kategori tiket (klik kartu, kecuali yang sold-out)
+        document.querySelectorAll(".ticket-cat:not(.sold-out)").forEach(function (card) {
+            card.addEventListener("click", function () {
+                document.querySelectorAll(".ticket-cat").forEach(function (c) {
+                    c.classList.remove("selected");
+                });
+                card.classList.add("selected");
+                kategoriTerpilih = card;
+                qty = qty || 1;
+                if (qty < 1) qty = 1;
+                hitungDanTampilkanRingkasan();
+            });
+        });
+
+        // 2. Tombol +/- jumlah tiket (event delegation, karena qty-ctrl ada di kartu yang dipilih)
+        document.addEventListener("click", function (e) {
+            const tombolTambah = e.target.closest(".qty-plus");
+            const tombolKurang = e.target.closest(".qty-minus");
+
+            if (tombolTambah || tombolKurang) {
+                e.stopPropagation(); // supaya tidak memicu klik pemilihan kartu
+                if (tombolTambah) {
+                    qty += 1;
+                } else if (qty > 1) {
+                    qty -= 1;
+                }
+                const qtyLabel = tombolTambah
+                    ? tombolTambah.closest(".ticket-cat").querySelector(".qty-value")
+                    : tombolKurang.closest(".ticket-cat").querySelector(".qty-value");
+                if (qtyLabel) qtyLabel.textContent = qty;
+                hitungDanTampilkanRingkasan();
+            }
+        });
+
+        // 3. Pilih metode pembayaran (klik salah satu pill)
+        let metodeTerpilih = null;
+        document.querySelectorAll(".pay-pill").forEach(function (pill) {
+            pill.addEventListener("click", function () {
+                document.querySelectorAll(".pay-pill").forEach(function (p) {
+                    p.classList.remove("pay-pill-selected");
+                });
+                pill.classList.add("pay-pill-selected");
+                metodeTerpilih = pill.dataset.metode;
+            });
+        });
+
+        // 4. Klik "Bayar Sekarang" -> kirim data ke backend, lalu lanjut ke halaman verifikasi
+        document.getElementById("btn-bayar-sekarang").addEventListener("click", async function () {
+            if (!kategoriTerpilih) {
+                alert("Silakan pilih kategori tiket terlebih dahulu.");
+                return;
+            }
+            if (!metodeTerpilih) {
+                alert("Silakan pilih metode pembayaran terlebih dahulu.");
+                return;
+            }
+
+            const namaUser = sessionStorage.getItem("userNama") || "Guest";
+            const harga = parseInt(kategoriTerpilih.dataset.harga, 10);
+            const subtotal = harga * qty;
+            const pajak = subtotal * PAJAK_PERSEN;
+            const total = subtotal + BIAYA_LAYANAN + pajak;
+
+            const dataPembayaran = {
+                namaKonser: kategoriTerpilih.dataset.kategori,
+                jumlahTiket: qty,
+                metodePembayaran: metodeTerpilih,
+                totalBayar: total,
+                namaUser: namaUser
+            };
+
+            try {
+                const response = await fetch(`${BASE_URL}/pembayaran`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dataPembayaran)
+                });
+
+                if (response.ok) {
+                    const hasilSimpan = await response.json();
+
+                    // Simpan detail pembayaran supaya halaman Verifikasi.html
+                    // bisa menampilkan data sesuai jumlah yang benar-benar dibayarkan
+                    localStorage.setItem("totalPembayaran", formatRupiah(total));
+                    localStorage.setItem("jumlahTiketBayar", qty);
+                    localStorage.setItem("kategoriBayar", kategoriTerpilih.dataset.kategori);
+                    localStorage.setItem("metodeBayar", metodeTerpilih);
+                    localStorage.setItem("orderIdBayar", "SV-" + String(hasilSimpan.id).padStart(5, "0"));
+
+                    window.location.href = "Verifikasi.html";
+                } else {
+                    alert("Gagal menyimpan pembayaran. Silakan coba lagi.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Terjadi kesalahan koneksi ke server.");
+            }
+        });
+
+        // Tampilkan ringkasan awal saat halaman dimuat
+        hitungDanTampilkanRingkasan();
+    </script>
 </body>
 </html>

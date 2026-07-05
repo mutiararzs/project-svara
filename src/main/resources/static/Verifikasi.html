@@ -219,7 +219,7 @@
                     </div>
                     <div class="detail-row flex-col items-start gap-1" style="display:flex;flex-direction:column;">
                         <span class="label-text">Jumlah Tiket</span>
-                        <span class="value-text text-sm">2 Tiket (Tribune Gold)</span>
+                        <span class="value-text text-sm" id="jumlahTiketDisplay">2 Tiket (Tribune Gold)</span>
                     </div>
                 </div>
                 <div class="detail-row" style="background:rgba(127,19,236,0.08);border-color:rgba(127,19,236,0.15);">
@@ -253,16 +253,29 @@
                 <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;">24/7 Support</span>
             </div>
             <div class="w-px h-4 bg-white/10"></div>
-            <span class="order-id">SV-99281-CP</span>
+            <span class="order-id" id="orderIdDisplay">SV-99281-CP</span>
         </div>
     </main>
 
     <script>
-    // Load total from localStorage
+    // Load detail pembayaran dari localStorage (dikirim dari Pembayaran.html)
+    // Jika tidak ada (misal halaman dibuka langsung tanpa checkout), tampilan default tetap dipakai
     document.addEventListener("DOMContentLoaded", function () {
         const totalBayar = localStorage.getItem("totalPembayaran");
         if (totalBayar) {
             document.getElementById("totalDisplay").innerText = totalBayar;
+        }
+
+        const jumlahTiket = localStorage.getItem("jumlahTiketBayar");
+        const kategori = localStorage.getItem("kategoriBayar");
+        if (jumlahTiket && kategori) {
+            document.getElementById("jumlahTiketDisplay").innerText =
+                jumlahTiket + " Tiket (" + kategori + ")";
+        }
+
+        const orderId = localStorage.getItem("orderIdBayar");
+        if (orderId) {
+            document.getElementById("orderIdDisplay").innerText = orderId;
         }
     });
 

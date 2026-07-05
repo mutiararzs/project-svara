@@ -180,8 +180,13 @@ body {
 
 <body class="font-body text-white antialiased overflow-x-hidden">
     <aside class="fixed top-0 left-0 h-full w-sidebar-width glass-nav-blur border-r border-glass-border z-50 flex flex-col">
-        <div class="h-nav-height flex items-center px-8 border-b border-glass-border">
-            <span class="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">SVARA ADMIN</span>
+        <div class="h-nav-height flex items-center px-8 border-b border-glass-border gap-2.5">
+            <div class="w-7 h-7 rounded-full bg-[#a855f7] flex items-center justify-center shadow-md shadow-purple-500/20 flex-shrink-0">
+                <span class="material-symbols-outlined text-white text-[16px] font-bold">graphic_eq</span>
+            </div>
+            <span class="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#edf2f7] via-[#a855f7] to-[#06b6d4]">
+                SVARA <span class="text-xs font-semibold tracking-normal text-white/40 ml-0.5 uppercase">Admin</span>
+            </span>
         </div>
         <div class="p-6 border-t border-glass-border">
             <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-glass-border">
@@ -250,10 +255,6 @@ body {
             </div>
         </div>
     </main>
-
-    <button class="fixed bottom-8 right-8 w-14 h-14 rounded-2xl bg-info-blue text-white shadow-xl shadow-info-blue/25 hover:scale-110 active:scale-95 transition-all flex items-center justify-center z-40">
-        <span class="material-symbols-outlined">add</span>
-    </button>
 
 </body>
 </html>

@@ -16,6 +16,7 @@ public class Pembayaran {
     private int jumlahTiket;
     private String metodePembayaran;
     private double totalBayar;
+    private String namaUser;
     public Pembayaran() {
     }
     public Pembayaran(String namaKonser,
@@ -56,5 +57,11 @@ public class Pembayaran {
     }
     public void setTotalBayar(double totalBayar) {
         this.totalBayar = totalBayar;
+    }
+    public String getNamaUser() {
+        return namaUser;
+    }
+    public void setNamaUser(String namaUser) {
+        this.namaUser = namaUser;
     }
 }
