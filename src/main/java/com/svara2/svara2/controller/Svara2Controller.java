@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.svara2.svara2.Model.Admin;
@@ -139,5 +140,14 @@ public class Svara2Controller {
                 .simpanPembayaran(
                         pembayaran
                 );
+    }
+
+    // RIWAYAT PEMBELIAN PER USER
+    // contoh: GET /pembayaran/riwayat?namaUser=Keisya
+    @GetMapping("/pembayaran/riwayat")
+    public List<Pembayaran> getRiwayatPembayaran(
+            @RequestParam String namaUser) {
+        return pembayaranService
+                .getRiwayatByUser(namaUser);
     }
 }

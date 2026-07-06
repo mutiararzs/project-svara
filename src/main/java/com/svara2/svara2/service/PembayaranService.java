@@ -1,5 +1,10 @@
 package com.svara2.svara2.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +15,19 @@ import com.svara2.svara2.repository.PembayaranRepository;
 public class PembayaranService {
     @Autowired
     private PembayaranRepository pembayaranRepository;
+
     public Pembayaran simpanPembayaran(
             Pembayaran pembayaran) {
+        // Catat waktu transaksi otomatis (format: "6 Juli 2026, 14:30")
+        SimpleDateFormat formatTanggal =
+                new SimpleDateFormat("d MMMM yyyy, HH:mm", new Locale("id", "ID"));
+        pembayaran.setTanggalBeli(formatTanggal.format(new Date()));
+
         return pembayaranRepository.save(pembayaran);
+    }
+
+    // Ambil riwayat pembelian tiket milik satu user (terbaru duluan)
+    public List<Pembayaran> getRiwayatByUser(String namaUser) {
+        return pembayaranRepository.findByNamaUserOrderByIdDesc(namaUser);
     }
 }

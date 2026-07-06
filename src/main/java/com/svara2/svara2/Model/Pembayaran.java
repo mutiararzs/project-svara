@@ -15,6 +15,7 @@ public class Pembayaran {
     private String namaKonser; // contoh: "Coldplay: Music of the Spheres", "Sheila on 7"
     private String kategoriTiket; // contoh: "Tribune Gold", "Festival A", "Tribune Silver"
     private String namaUser; // nama user yang login & membeli tiket, contoh: "Keisya"
+    private String tanggalBeli; // otomatis diisi backend saat transaksi disimpan
     private int jumlahTiket;
     private String metodePembayaran;
     private double totalBayar;
@@ -56,6 +57,12 @@ public class Pembayaran {
     }
     public void setNamaUser(String namaUser) {
         this.namaUser = namaUser;
+    }
+    public String getTanggalBeli() {
+        return tanggalBeli;
+    }
+    public void setTanggalBeli(String tanggalBeli) {
+        this.tanggalBeli = tanggalBeli;
     }
     public int getJumlahTiket() {
         return jumlahTiket;

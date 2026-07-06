@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Riwayat Pembelian | SVARA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/svara.js"></script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            background: #050310;
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .bg-mesh {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 10% 0%, rgba(127,19,236,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 90% 100%, rgba(0,245,255,0.08) 0%, transparent 60%),
+                #050310;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .topnav {
+            background: rgba(5, 3, 16, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .logo-text {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 20%, #bf5af2 70%, #00f5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .search-bar {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            transition: all 0.25s ease;
+        }
+        .search-bar:focus-within {
+            background: rgba(127,19,236,0.07);
+            border-color: rgba(127,19,236,0.4);
+            box-shadow: 0 0 0 3px rgba(127,19,236,0.08);
+        }
+        .search-bar input { color: white; }
+        .search-bar input::placeholder { color: rgba(255,255,255,0.25); }
+        .search-bar input:focus { outline: none; }
+
+        .nav-icon-btn {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 9999px;
+            color: rgba(255,255,255,0.5);
+            transition: all 0.2s ease;
+        }
+        .nav-icon-btn:hover { color: white; background: rgba(255,255,255,0.05); }
+        .nav-icon-btn.active {
+            color: #bf5af2;
+            background: rgba(127,19,236,0.14);
+        }
+
+        .glass-card {
+            background: rgba(255,255,255,0.025);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .ticket-card {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .ticket-card:hover {
+            border-color: rgba(127,19,236,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(127,19,236,0.15);
+        }
+        .ticket-card img { transition: transform 0.5s ease; }
+        .ticket-card:hover img { transform: scale(1.06); }
+
+        .status-badge {
+            background: rgba(52, 211, 153, 0.12);
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            color: #34d399;
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+        .order-id-chip {
+            background: rgba(5,3,16,0.6);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.12);
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: rgba(255,255,255,0.7);
+            padding: 3px 9px;
+            border-radius: 999px;
+        }
+
+        .section-title { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; }
+        .price-text { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; color: #fbbf24; }
+        .label-text {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+        }
+        .stat-number { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page-enter { animation: slide-up 0.5s ease forwards; }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .skeleton-pulse { animation: pulse-soft 1.5s ease-in-out infinite; }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(127,19,236,0.3); border-radius: 2px; }
+    </style>
+</head>
+
+<body class="page-enter">
+    <div class="bg-mesh"></div>
+
+    <!-- NAV -->
+    <nav class="h-[68px] fixed top-0 right-0 left-0 z-50 topnav flex justify-between items-center px-8 gap-6">
+        <a href="HomePage.html" class="flex items-center gap-2 shrink-0">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #7f13ec, #bf5af2);">
+                <span class="material-symbols-outlined text-white" style="font-size: 16px; font-variation-settings: 'FILL' 1;">graphic_eq</span>
+            </div>
+            <span class="logo-text text-2xl">SVARA</span>
+        </a>
+
+        <div class="flex-1 max-w-md">
+            <div class="search-bar flex items-center rounded-full px-4 py-2.5 gap-3">
+                <span class="material-symbols-outlined text-white/30" style="font-size: 18px;">search</span>
+                <input class="flex-1 bg-transparent border-none text-sm" placeholder="Konser, artis, atau lokasi..." type="text" onclick="window.location.href='HomePage.html'" readonly />
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+            <a href="HomePage.html" class="nav-icon-btn" title="Home">
+                <span class="material-symbols-outlined" style="font-size: 20px;">home</span>
+            </a>
+            <a href="Riwayat.html" class="nav-icon-btn active" title="Riwayat Pembelian">
+                <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;">receipt_long</span>
+            </a>
+            <button class="nav-icon-btn" title="Notifikasi">
+                <span class="material-symbols-outlined" style="font-size: 20px;">notifications</span>
+            </button>
+            <div class="h-8 w-px" style="background:rgba(255,255,255,0.07);"></div>
+            <div class="flex items-center gap-2.5">
+                <img alt="Avatar" class="w-9 h-9 rounded-full border border-purple-500/30" src="https://i.pinimg.com/736x/fb/a8/1f/fba81fdf7b0f35f5fadc99871816c8eb.jpg" />
+                <div class="hidden sm:block">
+                    <p class="text-sm font-semibold leading-none mb-0.5" id="nama-profil" style="font-family: 'Plus Jakarta Sans', sans-serif;">Guest</p>
+                    <p class="text-[10px] text-white/40 uppercase tracking-widest" style="font-family: 'Plus Jakarta Sans', sans-serif;">Member</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="pt-[88px] pb-16 px-8 max-w-[1440px] mx-auto relative z-10">
+
+        <!-- Page Header -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+            <div>
+                <p class="section-eyebrow mb-1" style="color:#bf5af2; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;">✦ Aktivitas Kamu</p>
+                <h1 class="section-title text-3xl md:text-4xl text-white mb-1">Riwayat Pembelian</h1>
+                <p class="text-white/40 text-sm" id="subtitle-user">Semua tiket konser yang pernah kamu beli tampil di sini.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                <div class="search-bar flex items-center rounded-full px-4 py-2.5 gap-3 flex-grow lg:w-72">
+                    <span class="material-symbols-outlined text-white/30" style="font-size: 18px;">search</span>
+                    <input id="input-cari" class="flex-1 bg-transparent border-none text-sm" placeholder="Cari nama konser..." type="text" />
+                </div>
+                <div class="relative min-w-[150px]">
+                    <select id="select-sort" class="w-full appearance-none search-bar rounded-full px-4 py-2.5 pr-9 text-sm cursor-pointer" style="color:white;">
+                        <option value="terbaru" style="background:#16111c;">Terbaru</option>
+                        <option value="terlama" style="background:#16111c;">Terlama</option>
+                    </select>
+                    <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/30" style="font-size: 18px;">expand_more</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Strip -->
+        <div class="grid grid-cols-3 gap-4 mb-10" id="stats-strip">
+            <div class="glass-card rounded-2xl p-5">
+                <p class="label-text mb-2">Total Transaksi</p>
+                <p class="stat-number text-2xl md:text-3xl text-white" id="stat-total-transaksi">0</p>
+            </div>
+            <div class="glass-card rounded-2xl p-5">
+                <p class="label-text mb-2">Total Tiket</p>
+                <p class="stat-number text-2xl md:text-3xl text-white" id="stat-total-tiket">0</p>
+            </div>
+            <div class="glass-card rounded-2xl p-5">
+                <p class="label-text mb-2">Total Pengeluaran</p>
+                <p class="stat-number text-2xl md:text-3xl" style="color:#fbbf24;" id="stat-total-bayar">Rp 0</p>
+            </div>
+        </div>
+
+        <!-- Loading Skeleton -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="skeleton-container">
+            <div class="ticket-card skeleton-pulse">
+                <div class="h-36 bg-white/5"></div>
+                <div class="p-5 space-y-3">
+                    <div class="h-4 w-3/4 bg-white/10 rounded-full"></div>
+                    <div class="h-3 w-1/2 bg-white/5 rounded-full"></div>
+                    <div class="h-3 w-2/3 bg-white/5 rounded-full"></div>
+                </div>
+            </div>
+            <div class="ticket-card skeleton-pulse">
+                <div class="h-36 bg-white/5"></div>
+                <div class="p-5 space-y-3">
+                    <div class="h-4 w-3/4 bg-white/10 rounded-full"></div>
+                    <div class="h-3 w-1/2 bg-white/5 rounded-full"></div>
+                    <div class="h-3 w-2/3 bg-white/5 rounded-full"></div>
+                </div>
+            </div>
+            <div class="ticket-card skeleton-pulse">
+                <div class="h-36 bg-white/5"></div>
+                <div class="p-5 space-y-3">
+                    <div class="h-4 w-3/4 bg-white/10 rounded-full"></div>
+                    <div class="h-3 w-1/2 bg-white/5 rounded-full"></div>
+                    <div class="h-3 w-2/3 bg-white/5 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Grid -->
+        <div class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="history-container"></div>
+
+        <!-- Not Logged In State -->
+        <div class="hidden flex-col items-center justify-center text-center py-24" id="guest-state">
+            <div class="w-20 h-20 rounded-full flex items-center justify-center mb-5" style="background: rgba(127,19,236,0.1); border: 1px solid rgba(127,19,236,0.25);">
+                <span class="material-symbols-outlined text-purple-300" style="font-size:36px;">lock_person</span>
+            </div>
+            <h2 class="section-title text-xl text-white mb-2">Kamu belum login</h2>
+            <p class="text-white/40 max-w-xs mx-auto mb-6 text-sm">Masuk ke akunmu dulu untuk melihat riwayat pembelian tiket konser.</p>
+            <a href="LoginUser.html" class="px-8 py-3 rounded-2xl text-black text-sm font-bold" style="background: linear-gradient(135deg, #7f13ec, #bf5af2); color:white;">Masuk Sekarang</a>
+        </div>
+
+        <!-- Empty State -->
+        <div class="hidden flex-col items-center justify-center text-center py-24" id="empty-state">
+            <div class="w-20 h-20 rounded-full flex items-center justify-center mb-5" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+                <span class="material-symbols-outlined text-white/30" style="font-size:36px;">confirmation_number</span>
+            </div>
+            <h2 class="section-title text-xl text-white mb-2" id="empty-title">Belum ada transaksi</h2>
+            <p class="text-white/40 max-w-xs mx-auto mb-6 text-sm">Ayo cari konser favoritmu dan amankan tiketnya sekarang!</p>
+            <a href="HomePage.html" class="px-8 py-3 rounded-2xl text-sm font-bold" style="background: linear-gradient(135deg, #7f13ec, #bf5af2); color:white;">Cari Konser</a>
+        </div>
+
+    </main>
+
+    <script>
+        const BASE_URL = window.location.origin;
+        const namaUser = sessionStorage.getItem("userNama");
+
+        // Gambar konser, sinkron dengan DATA_KONSER di Pembayaran.html
+        const GAMBAR_KONSER = {
+            "Coldplay: Music of the Spheres": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbDfaF-U4W9B6EPk5-Krr6cKlyRaHOwXrNmd0JjesKCKFIRlUHueiGam5J85X8tkTScMwctHA1JK8eKrj_EZoSlZmmGWHarQySMY_srP6ySoZdJqrT3m-ZEq7NHtDsmcUvPCdnluSEQDml8zresDfsVn8zJbr7crA-4p262Tm2hyTrtnTUHsoD8-WhdADAYAyLbIaKfltfv3AXSY1k14rOdaBKeDvXUaBQ9g5UXfmwiAfV-VXa22qHEk7Tc1X9UM4cIU-P27IYbnI",
+            "Sheila on 7: Tunggu Aku di...": "https://i1-c.pinimg.com/736x/b7/98/c3/b798c3c9cdbe854f7bbb0336785ce4bc.jpg",
+            "Raisa: It's Personally Mine": "https://i.pinimg.com/736x/93/f3/7e/93f37ec81afe1de41f15f7892153637e.jpg",
+            "Perunggu: Ini Abadi": "https://i.pinimg.com/1200x/14/88/1f/14881f726e7884840eb7bed9867a50be.jpg",
+            "Hindia: Menari Bayangan": "https://i.pinimg.com/736x/79/20/4c/79204c1d93ded6f5f759b37a369b917a.jpg",
+            "Nadin Amizah: Selamat Ulang Tahun": "https://i.pinimg.com/736x/53/03/8b/53038b0b3a0defa6630b602e1e9a0f43.jpg",
+            "Pamungkas: Birdy South East Asia": "https://i.pinimg.com/1200x/c6/1a/05/c61a05d4ead548edf237c54197e69f80.jpg"
+        };
+        const GAMBAR_DEFAULT = "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=800&auto=format&fit=crop";
+
+        function formatRupiah(angka) {
+            return "Rp " + Math.round(angka).toLocaleString("id-ID");
+        }
+
+        function gambarUntuk(namaKonser) {
+            return GAMBAR_KONSER[namaKonser] || GAMBAR_DEFAULT;
+        }
+
+        function orderId(item) {
+            return "SV-" + String(item.id).padStart(5, "0");
+        }
+
+        let riwayatAsli = [];
+
+        function renderRiwayat() {
+            const container = document.getElementById("history-container");
+            const emptyState = document.getElementById("empty-state");
+            const keyword = (document.getElementById("input-cari").value || "").toLowerCase().trim();
+            const urutan = document.getElementById("select-sort").value;
+
+            let data = riwayatAsli.filter(function (item) {
+                return item.namaKonser.toLowerCase().includes(keyword);
+            });
+
+            data.sort(function (a, b) {
+                return urutan === "terlama" ? a.id - b.id : b.id - a.id;
+            });
+
+            if (data.length === 0) {
+                container.classList.add("hidden");
+                container.classList.remove("grid");
+                emptyState.classList.remove("hidden");
+                emptyState.classList.add("flex");
+                document.getElementById("empty-title").textContent =
+                    keyword ? "Tidak ada hasil ditemukan" : "Belum ada transaksi";
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+            emptyState.classList.remove("flex");
+            container.classList.remove("hidden");
+            container.classList.add("grid");
+
+            container.innerHTML = "";
+            data.forEach(function (item) {
+                const card = document.createElement("div");
+                card.className = "ticket-card";
+                card.innerHTML =
+                    '<div class="relative h-36 overflow-hidden">' +
+                        '<img class="w-full h-full object-cover" src="' + gambarUntuk(item.namaKonser) + '" alt="' + item.namaKonser + '" />' +
+                        '<div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.9) 0%, rgba(5,3,16,0.15) 60%, transparent 100%);"></div>' +
+                        '<div class="absolute top-3 left-3 order-id-chip">' + orderId(item) + '</div>' +
+                        '<div class="absolute top-3 right-3 status-badge">Lunas</div>' +
+                        '<div class="absolute bottom-3 left-4 right-4">' +
+                            '<h3 class="font-bold text-base leading-tight" style="font-family:\'Plus Jakarta Sans\',sans-serif;">' + item.namaKonser + '</h3>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="p-5 space-y-3">' +
+                        '<div class="flex items-center gap-1.5 text-white/50 text-xs">' +
+                            '<span class="material-symbols-outlined" style="font-size:15px;">calendar_today</span>' +
+                            (item.tanggalBeli || "-") +
+                        '</div>' +
+                        '<div class="flex items-center justify-between text-sm text-white/70">' +
+                            '<div class="flex items-center gap-1.5">' +
+                                '<span class="material-symbols-outlined" style="font-size:16px;">confirmation_number</span>' +
+                                item.kategoriTiket + ' &times; ' + item.jumlahTiket +
+                            '</div>' +
+                            '<div class="flex items-center gap-1.5">' +
+                                '<span class="material-symbols-outlined" style="font-size:16px;">credit_card</span>' +
+                                item.metodePembayaran +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="h-px bg-white/8"></div>' +
+                        '<div class="flex items-center justify-between">' +
+                            '<span class="label-text">Total Bayar</span>' +
+                            '<span class="price-text text-lg">' + formatRupiah(item.totalBayar) + '</span>' +
+                        '</div>' +
+                    '</div>';
+                container.appendChild(card);
+            });
+        }
+
+        function renderStats() {
+            const totalTransaksi = riwayatAsli.length;
+            const totalTiket = riwayatAsli.reduce(function (acc, item) { return acc + item.jumlahTiket; }, 0);
+            const totalBayar = riwayatAsli.reduce(function (acc, item) { return acc + item.totalBayar; }, 0);
+            document.getElementById("stat-total-transaksi").textContent = totalTransaksi;
+            document.getElementById("stat-total-tiket").textContent = totalTiket;
+            document.getElementById("stat-total-bayar").textContent = formatRupiah(totalBayar);
+        }
+
+        async function muatRiwayat() {
+            const skeleton = document.getElementById("skeleton-container");
+            const guestState = document.getElementById("guest-state");
+            const emptyState = document.getElementById("empty-state");
+            const container = document.getElementById("history-container");
+            const statsStrip = document.getElementById("stats-strip");
+
+            if (!namaUser) {
+                skeleton.classList.add("hidden");
+                statsStrip.classList.add("hidden");
+                guestState.classList.remove("hidden");
+                guestState.classList.add("flex");
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    BASE_URL + "/pembayaran/riwayat?namaUser=" + encodeURIComponent(namaUser)
+                );
+                skeleton.classList.add("hidden");
+
+                if (!response.ok) {
+                    emptyState.classList.remove("hidden");
+                    emptyState.classList.add("flex");
+                    return;
+                }
+
+                riwayatAsli = await response.json();
+                renderStats();
+                renderRiwayat();
+            } catch (err) {
+                console.error("Gagal memuat riwayat pembelian:", err);
+                skeleton.classList.add("hidden");
+                emptyState.classList.remove("hidden");
+                emptyState.classList.add("flex");
+            }
+        }
+
+        if (namaUser) {
+            document.getElementById("nama-profil").textContent = namaUser;
+            document.getElementById("subtitle-user").textContent =
+                "Semua tiket konser yang pernah dibeli oleh " + namaUser + ".";
+        }
+
+        document.getElementById("input-cari").addEventListener("input", renderRiwayat);
+        document.getElementById("select-sort").addEventListener("change", renderRiwayat);
+
+        muatRiwayat();
+    </script>
+</body>
+</html>
