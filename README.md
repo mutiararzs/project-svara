@@ -182,15 +182,11 @@ export SPRING_DATASOURCE_PASSWORD=<password>
 
 ## 6. Anggota Tim 
 
-| Peran | Nama | NIM/Keterangan |
-|Frontend|Mutiara Rizky Salsabila|41524010092|
-|Backend Core|Deswita Nindya Putri|41524010082|
-|Backend logic|Keisya Rizkia Kamila|41524010093|
+Mutiara Rizky Salsabila-41524010092
+Deswita Nindya Putri-41524010082
+Keisya Rizkia Kamila-41524010093
 
-| Mata Kuliah | PEMROGRAMAN BERORIENTASI OBJEK | 
-| Dosen Pengampu | Prastika Indriyanti, S.Kom, MCS |
-| Institusi | Universitas Mercu Buana | — |
-
+Mata Kuliah : PEMROGRAMAN BERORIENTASI OBJEK 
 ---
 
 <p align="center"><i>Dokumen ini disusun sebagai bagian dari deliverable akademik proyek SVARA — Manajemen Pengguna Berbasis Web.</i></p>
