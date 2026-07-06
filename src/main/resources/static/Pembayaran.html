@@ -438,6 +438,77 @@
         const params = new URLSearchParams(window.location.search);
         const konserIdDariUrl = params.get("konserId");
 
+        // Data konser lokal (belum ada tabel/endpoint Konser di backend,
+        // jadi datanya disimpan langsung di sini, sinkron dengan kartu-kartu
+        // konser di HomePage.html: Pembayaran.html?konserId=1..6)
+        const DATA_KONSER = {
+            "1": {
+                namaKonser: "Sheila on 7: Tunggu Aku di...",
+                tanggal: "20 Agustus 2025",
+                lokasi: "Stadion Kridosono, Yogyakarta",
+                gambarUrl: "https://i1-c.pinimg.com/736x/b7/98/c3/b798c3c9cdbe854f7bbb0336785ce4bc.jpg",
+                kategoriTiketList: [
+                    { namaKategori: "Festival", harga: 350000, deskripsi: "Standing Area" },
+                    { namaKategori: "Tribune Silver", harga: 500000, deskripsi: "Seating Number" },
+                    { namaKategori: "Tribune Gold", harga: 650000, deskripsi: "Seating · Dekat panggung" }
+                ]
+            },
+            "2": {
+                namaKonser: "Raisa: It's Personally Mine",
+                tanggal: "5 September 2025",
+                lokasi: "Istora Senayan, Jakarta",
+                gambarUrl: "https://i.pinimg.com/736x/93/f3/7e/93f37ec81afe1de41f15f7892153637e.jpg",
+                kategoriTiketList: [
+                    { namaKategori: "Tribune Silver", harga: 425000, deskripsi: "Seating Number" },
+                    { namaKategori: "Tribune Gold", harga: 600000, deskripsi: "Seating · View tengah" },
+                    { namaKategori: "VIP", harga: 900000, deskripsi: "Dekat panggung utama" }
+                ]
+            },
+            "3": {
+                namaKonser: "Perunggu: Ini Abadi",
+                tanggal: "12 Oktober 2025",
+                lokasi: "JIS, Jakarta",
+                gambarUrl: "https://i.pinimg.com/1200x/14/88/1f/14881f726e7884840eb7bed9867a50be.jpg",
+                kategoriTiketList: [
+                    { namaKategori: "Festival", harga: 600000, deskripsi: "Standing Area" },
+                    { namaKategori: "Tribune Silver", harga: 800000, deskripsi: "Seating Number" },
+                    { namaKategori: "Tribune Gold", harga: 1100000, deskripsi: "Seating · Dekat panggung" }
+                ]
+            },
+            "4": {
+                namaKonser: "Hindia: Menari Bayangan",
+                tanggal: "3 November 2025",
+                lokasi: "Tennis Indoor Senayan",
+                gambarUrl: "https://i.pinimg.com/736x/79/20/4c/79204c1d93ded6f5f759b37a369b917a.jpg",
+                kategoriTiketList: [
+                    { namaKategori: "Festival", harga: 275000, deskripsi: "Standing Area" },
+                    { namaKategori: "Tribune Silver", harga: 400000, deskripsi: "Seating Number" },
+                    { namaKategori: "Tribune Gold", harga: 550000, deskripsi: "Seating · Dekat panggung" }
+                ]
+            },
+            "5": {
+                namaKonser: "Nadin Amizah: Selamat Ulang Tahun",
+                tanggal: "18 November 2025",
+                lokasi: "Teater Jakarta, TIM",
+                gambarUrl: "https://i.pinimg.com/736x/53/03/8b/53038b0b3a0defa6630b602e1e9a0f43.jpg",
+                kategoriTiketList: [
+                    { namaKategori: "Reguler", harga: 300000, deskripsi: "Seating Number" },
+                    { namaKategori: "VIP", harga: 500000, deskripsi: "Seating · Baris depan" }
+                ]
+            },
+            "6": {
+                namaKonser: "Pamungkas: Birdy South East Asia",
+                tanggal: "30 November 2025",
+                lokasi: "Ecovention Ancol",
+                gambarUrl: "https://i.pinimg.com/1200x/c6/1a/05/c61a05d4ead548edf237c54197e69f80.jpg",
+                kategoriTiketList: [
+                    { namaKategori: "Festival", harga: 350000, deskripsi: "Standing Area" },
+                    { namaKategori: "Tribune Gold", harga: 550000, deskripsi: "Seating · View tengah" },
+                    { namaKategori: "VVIP", harga: 900000, deskripsi: "Dekat panggung utama" }
+                ]
+            }
+        };
+
         // Data konser aktif di halaman ini (default: Coldplay, sesuai tampilan statis asli)
         let namaKonserAktif = "Coldplay: Music of the Spheres";
         let konserIdAktif = 0;
@@ -524,31 +595,31 @@
             hitungDanTampilkanRingkasan();
         }
 
-        // Kalau halaman dibuka dengan ?konserId=..., ambil data konser & kategori tiketnya dari API
-        async function muatDataKonser() {
+        // Kalau halaman dibuka dengan ?konserId=..., ambil data konser & kategori
+        // tiketnya dari DATA_KONSER lokal (belum ada endpoint /konser/{id} di backend)
+        function muatDataKonser() {
             if (!konserIdDariUrl) {
                 return; // tetap pakai tampilan statis Coldplay (default)
             }
-            try {
-                const response = await fetch(`${BASE_URL}/konser/${konserIdDariUrl}`);
-                if (!response.ok) return;
 
-                const konser = await response.json();
-                namaKonserAktif = konser.namaKonser;
-                konserIdAktif = konser.id;
+            const konser = DATA_KONSER[konserIdDariUrl];
+            if (!konser) {
+                console.warn("Data konser untuk konserId=" + konserIdDariUrl + " tidak ditemukan, memakai tampilan default.");
+                return;
+            }
 
-                document.getElementById("hero-nama-konser").textContent = konser.namaKonser;
-                document.getElementById("hero-tanggal").textContent = konser.tanggal;
-                document.getElementById("hero-lokasi").textContent = konser.lokasi;
-                if (konser.gambarUrl) {
-                    document.getElementById("hero-gambar").src = konser.gambarUrl;
-                }
+            namaKonserAktif = konser.namaKonser;
+            konserIdAktif = parseInt(konserIdDariUrl, 10);
 
-                if (konser.kategoriTiketList && konser.kategoriTiketList.length > 0) {
-                    renderKategoriTiket(konser.kategoriTiketList);
-                }
-            } catch (err) {
-                console.error("Gagal memuat data konser:", err);
+            document.getElementById("hero-nama-konser").textContent = konser.namaKonser;
+            document.getElementById("hero-tanggal").textContent = konser.tanggal;
+            document.getElementById("hero-lokasi").textContent = konser.lokasi;
+            if (konser.gambarUrl) {
+                document.getElementById("hero-gambar").src = konser.gambarUrl;
+            }
+
+            if (konser.kategoriTiketList && konser.kategoriTiketList.length > 0) {
+                renderKategoriTiket(konser.kategoriTiketList);
             }
         }
         muatDataKonser();
@@ -599,7 +670,6 @@
 
             const dataPembayaran = {
                 namaKonser: namaKonserAktif,
-                konserId: konserIdAktif,
                 kategoriTiket: kategoriTerpilih.dataset.kategori,
                 jumlahTiket: qty,
                 metodePembayaran: metodeTerpilih,

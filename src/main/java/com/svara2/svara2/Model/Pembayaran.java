@@ -13,8 +13,8 @@ public class Pembayaran {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String namaKonser; // contoh: "Coldplay: Music of the Spheres", "Sheila on 7"
-    private Integer konserId; // relasi ke tabel Konser (opsional, boleh null)
     private String kategoriTiket; // contoh: "Tribune Gold", "Festival A", "Tribune Silver"
+    private String namaUser; // nama user yang login & membeli tiket, contoh: "Keisya"
     private int jumlahTiket;
     private String metodePembayaran;
     private double totalBayar;
@@ -22,11 +22,13 @@ public class Pembayaran {
     }
     public Pembayaran(String namaKonser,
                       String kategoriTiket,
+                      String namaUser,
                       int jumlahTiket,
                       String metodePembayaran,
                       double totalBayar) {
         this.namaKonser = namaKonser;
         this.kategoriTiket = kategoriTiket;
+        this.namaUser = namaUser;
         this.jumlahTiket = jumlahTiket;
         this.metodePembayaran = metodePembayaran;
         this.totalBayar = totalBayar;
@@ -43,17 +45,17 @@ public class Pembayaran {
     public void setNamaKonser(String namaKonser) {
         this.namaKonser = namaKonser;
     }
-    public Integer getKonserId() {
-        return konserId;
-    }
-    public void setKonserId(Integer konserId) {
-        this.konserId = konserId;
-    }
     public String getKategoriTiket() {
         return kategoriTiket;
     }
     public void setKategoriTiket(String kategoriTiket) {
         this.kategoriTiket = kategoriTiket;
+    }
+    public String getNamaUser() {
+        return namaUser;
+    }
+    public void setNamaUser(String namaUser) {
+        this.namaUser = namaUser;
     }
     public int getJumlahTiket() {
         return jumlahTiket;

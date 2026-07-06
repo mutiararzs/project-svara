@@ -210,12 +210,12 @@
             <div class="w-full space-y-3 mb-8">
                 <div class="detail-row">
                     <span class="label-text">Nama Konser</span>
-                    <span class="value-text text-sm text-right">Coldplay: Music of the Spheres</span>
+                    <span class="value-text text-sm text-right" id="namaKonserDisplay">Coldplay: Music of the Spheres</span>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div class="detail-row flex-col items-start gap-1" style="display:flex;flex-direction:column;">
                         <span class="label-text">Tanggal Konser</span>
-                        <span class="value-text text-sm">15 November 2024</span>
+                        <span class="value-text text-sm" id="tanggalKonserDisplay">15 November 2024</span>
                     </div>
                     <div class="detail-row flex-col items-start gap-1" style="display:flex;flex-direction:column;">
                         <span class="label-text">Jumlah Tiket</span>
@@ -264,6 +264,16 @@
         const totalBayar = localStorage.getItem("totalPembayaran");
         if (totalBayar) {
             document.getElementById("totalDisplay").innerText = totalBayar;
+        }
+
+        const namaKonser = localStorage.getItem("namaKonserBayar");
+        if (namaKonser) {
+            document.getElementById("namaKonserDisplay").innerText = namaKonser;
+        }
+
+        const tanggalKonser = localStorage.getItem("tanggalKonserBayar");
+        if (tanggalKonser) {
+            document.getElementById("tanggalKonserDisplay").innerText = tanggalKonser;
         }
 
         const jumlahTiket = localStorage.getItem("jumlahTiketBayar");
