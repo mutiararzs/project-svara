@@ -87,12 +87,9 @@
             opacity: 0.4;
             cursor: not-allowed;
         }
-        .ticket-cat .accent-left {
-            position: absolute;
-            left: 0; top: 20%; bottom: 20%;
-            width: 3px;
-            border-radius: 2px;
-        }
+        .ticket-cat .cat-status-label { display: none; }
+        .ticket-cat.selected .cat-status-label { display: inline-block; }
+        .ticket-cat.selected .cat-select-btn { display: none; }
 
         /* Qty control */
         .qty-ctrl {
@@ -198,7 +195,7 @@
             <div class="flex items-center gap-2.5">
                 <img alt="Avatar" class="w-9 h-9 rounded-full border border-purple-500/30" src="https://i.pinimg.com/736x/fb/a8/1f/fba81fdf7b0f35f5fadc99871816c8eb.jpg" />
                 <div class="hidden sm:block">
-                    <p class="text-sm font-semibold leading-none mb-0.5" style="font-family: 'Plus Jakarta Sans', sans-serif;">Jack Chowie</p>
+                    <p class="text-sm font-semibold leading-none mb-0.5" id="nama-profil" style="font-family: 'Plus Jakarta Sans', sans-serif;">Jack Chowie</p>
                     <p class="text-[10px] text-white/40 uppercase tracking-widest" style="font-family: 'Plus Jakarta Sans', sans-serif;">Premium</p>
                 </div>
             </div>
@@ -213,19 +210,19 @@
 
             <!-- Hero Banner -->
             <section class="relative h-[360px] rounded-3xl overflow-hidden">
-                <img alt="Coldplay Concert" class="w-full h-full object-cover opacity-55" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbDfaF-U4W9B6EPk5-Krr6cKlyRaHOwXrNmd0JjesKCKFIRlUHueiGam5J85X8tkTScMwctHA1JK8eKrj_EZoSlZmmGWHarQySMY_srP6ySoZdJqrT3m-ZEq7NHtDsmcUvPCdnluSEQDml8zresDfsVn8zJbr7crA-4p262Tm2hyTrtnTUHsoD8-WhdADAYAyLbIaKfltfv3AXSY1k14rOdaBKeDvXUaBQ9g5UXfmwiAfV-VXa22qHEk7Tc1X9UM4cIU-P27IYbnI" />
+                <img id="hero-gambar" alt="Konser" class="w-full h-full object-cover opacity-55" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbDfaF-U4W9B6EPk5-Krr6cKlyRaHOwXrNmd0JjesKCKFIRlUHueiGam5J85X8tkTScMwctHA1JK8eKrj_EZoSlZmmGWHarQySMY_srP6ySoZdJqrT3m-ZEq7NHtDsmcUvPCdnluSEQDml8zresDfsVn8zJbr7crA-4p262Tm2hyTrtnTUHsoD8-WhdADAYAyLbIaKfltfv3AXSY1k14rOdaBKeDvXUaBQ9g5UXfmwiAfV-VXa22qHEk7Tc1X9UM4cIU-P27IYbnI" />
                 <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.96) 0%, rgba(5,3,16,0.3) 60%, transparent 100%);"></div>
                 <div class="absolute bottom-0 left-0 p-8 space-y-2">
                     <span class="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#050310;font-family:'Plus Jakarta Sans',sans-serif;">🎫 Ticket Booking</span>
-                    <h1 class="text-4xl font-extrabold mb-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">Coldplay: Music of the Spheres</h1>
+                    <h1 id="hero-nama-konser" class="text-4xl font-extrabold mb-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">Coldplay: Music of the Spheres</h1>
                     <div class="flex items-center gap-5 text-white/60 text-sm">
                         <div class="flex items-center gap-1.5">
                             <span class="material-symbols-outlined text-blue-400" style="font-size:16px;">calendar_today</span>
-                            15 November 2024
+                            <span id="hero-tanggal">15 November 2024</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span class="material-symbols-outlined text-blue-400" style="font-size:16px;">location_on</span>
-                            Stadion Utama GBK, Jakarta
+                            <span id="hero-lokasi">Stadion Utama GBK, Jakarta</span>
                         </div>
                     </div>
                 </div>
@@ -238,7 +235,7 @@
                     <span class="text-white/35 text-xs" style="font-family:'Plus Jakarta Sans',sans-serif;">Harga sudah termasuk pajak</span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div id="ticket-cat-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <!-- Festival A -->
                     <div class="ticket-cat relative" data-kategori="Festival A" data-harga="1500000" style="border-left: 3px solid #3b82f6;">
@@ -254,7 +251,8 @@
                             <span class="text-emerald-400 text-xs">Dekat panggung utama</span>
                         </div>
                         <div class="cat-footer">
-                            <button class="w-full py-2.5 rounded-xl border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider hover:bg-blue-500/10 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                            <button class="cat-select-btn w-full py-2.5 rounded-xl border border-blue-500/30 text-blue-400 text-xs font-bold uppercase tracking-wider hover:bg-blue-500/10 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                            <span class="cat-status-label label-text text-blue-400/70">Terpilih</span>
                         </div>
                     </div>
 
@@ -271,13 +269,9 @@
                             <span class="material-symbols-outlined text-blue-400" style="font-size:15px;">visibility</span>
                             <span class="text-blue-400 text-xs">View tengah stadion</span>
                         </div>
-                        <div class="cat-footer flex items-center justify-between">
-                            <span class="label-text text-yellow-400/70">Terpilih</span>
-                            <div class="qty-ctrl">
-                                <div class="qty-btn qty-minus"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">remove</span></div>
-                                <span class="w-10 text-center text-sm font-bold qty-value" style="font-family:'Plus Jakarta Sans',sans-serif;">2</span>
-                                <div class="qty-btn qty-plus"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">add</span></div>
-                            </div>
+                        <div class="cat-footer">
+                            <button class="cat-select-btn w-full py-2.5 rounded-xl border border-yellow-500/30 text-yellow-400 text-xs font-bold uppercase tracking-wider hover:bg-yellow-500/10 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                            <span class="cat-status-label label-text text-yellow-400/70">Terpilih</span>
                         </div>
                     </div>
 
@@ -295,7 +289,8 @@
                             <span class="text-white/40 text-xs">Sayap kiri/kanan</span>
                         </div>
                         <div class="cat-footer">
-                            <button class="w-full py-2.5 rounded-xl border border-white/10 text-white/50 text-xs font-bold uppercase tracking-wider hover:bg-white/5 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                            <button class="cat-select-btn w-full py-2.5 rounded-xl border border-white/10 text-white/50 text-xs font-bold uppercase tracking-wider hover:bg-white/5 transition-all" style="font-family:'Plus Jakarta Sans',sans-serif;">Pilih Kategori</button>
+                            <span class="cat-status-label label-text text-white/70">Terpilih</span>
                         </div>
                     </div>
 
@@ -363,6 +358,15 @@
                 <div class="glass-card rounded-2xl p-5 space-y-5" style="border-color: rgba(127,19,236,0.15);">
                     <h3 class="text-sm font-bold border-b border-white/6 pb-4" style="font-family:'Plus Jakarta Sans',sans-serif;">Ringkasan Pesanan 🧾</h3>
 
+                    <div class="flex items-center justify-between">
+                        <span class="label-text">Jumlah Tiket</span>
+                        <div class="qty-ctrl">
+                            <div class="qty-btn qty-minus"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">remove</span></div>
+                            <span class="w-10 text-center text-sm font-bold qty-value" style="font-family:'Plus Jakarta Sans',sans-serif;">2</span>
+                            <div class="qty-btn qty-plus"><span class="material-symbols-outlined text-white/60" style="font-size:16px;">add</span></div>
+                        </div>
+                    </div>
+
                     <div class="space-y-3">
                         <div class="flex justify-between items-start">
                             <div>
@@ -424,7 +428,19 @@
     </footer>
 
     <script>
+        // Tampilkan nama user yang sedang login di profil navbar (bukan lagi hardcode "Jack Chowie")
+        const namaUserProfil = sessionStorage.getItem("userNama");
+        if (namaUserProfil) {
+            document.getElementById("nama-profil").textContent = namaUserProfil;
+        }
+
         const BASE_URL = window.location.origin;
+        const params = new URLSearchParams(window.location.search);
+        const konserIdDariUrl = params.get("konserId");
+
+        // Data konser aktif di halaman ini (default: Coldplay, sesuai tampilan statis asli)
+        let namaKonserAktif = "Coldplay: Music of the Spheres";
+        let konserIdAktif = 0;
 
         // Format angka ke Rupiah, mis. 1700000 -> "Rp 1.700.000"
         function formatRupiah(angka) {
@@ -437,6 +453,7 @@
 
         const BIAYA_LAYANAN = 50000;
         const PAJAK_PERSEN = 0.15;
+        const WARNA_BORDER = ["#3b82f6", "#fbbf24", "rgba(255,255,255,0.2)", "#22c55e", "#ec4899"];
 
         function hitungDanTampilkanRingkasan() {
             if (!kategoriTerpilih) return;
@@ -457,35 +474,96 @@
         }
 
         // 1. Pilih kategori tiket (klik kartu, kecuali yang sold-out)
-        document.querySelectorAll(".ticket-cat:not(.sold-out)").forEach(function (card) {
-            card.addEventListener("click", function () {
-                document.querySelectorAll(".ticket-cat").forEach(function (c) {
-                    c.classList.remove("selected");
+        // Dibuat jadi fungsi supaya bisa dipanggil ulang setiap kali kartu kategori
+        // di-render ulang (misalnya setelah data konser dari API selesai dimuat).
+        function aktifkanPemilihanKartu() {
+            document.querySelectorAll(".ticket-cat:not(.sold-out)").forEach(function (card) {
+                card.addEventListener("click", function () {
+                    document.querySelectorAll(".ticket-cat").forEach(function (c) {
+                        c.classList.remove("selected");
+                    });
+                    card.classList.add("selected");
+                    kategoriTerpilih = card;
+                    qty = qty || 1;
+                    if (qty < 1) qty = 1;
+                    hitungDanTampilkanRingkasan();
                 });
-                card.classList.add("selected");
-                kategoriTerpilih = card;
-                qty = qty || 1;
-                if (qty < 1) qty = 1;
-                hitungDanTampilkanRingkasan();
             });
-        });
+        }
+        aktifkanPemilihanKartu();
 
-        // 2. Tombol +/- jumlah tiket (event delegation, karena qty-ctrl ada di kartu yang dipilih)
-        document.addEventListener("click", function (e) {
-            const tombolTambah = e.target.closest(".qty-plus");
-            const tombolKurang = e.target.closest(".qty-minus");
+        // Render ulang kartu kategori tiket berdasarkan data dari API (per konser)
+        function renderKategoriTiket(kategoriList) {
+            const container = document.getElementById("ticket-cat-container");
+            container.innerHTML = "";
 
-            if (tombolTambah || tombolKurang) {
-                e.stopPropagation(); // supaya tidak memicu klik pemilihan kartu
-                if (tombolTambah) {
-                    qty += 1;
-                } else if (qty > 1) {
-                    qty -= 1;
+            kategoriList.forEach(function (kategori, index) {
+                const warna = WARNA_BORDER[index % WARNA_BORDER.length];
+                const card = document.createElement("div");
+                card.className = "ticket-cat relative" + (index === 0 ? " selected" : "");
+                card.dataset.kategori = kategori.namaKategori;
+                card.dataset.harga = kategori.harga;
+                card.style.borderLeft = "3px solid " + warna;
+                card.innerHTML =
+                    '<div class="flex justify-between items-start mb-3">' +
+                        '<div>' +
+                            '<h3 class="font-bold text-base mb-0.5" style="font-family:\'Plus Jakarta Sans\',sans-serif;">' + kategori.namaKategori + '</h3>' +
+                            '<p class="text-white/45 text-xs">' + (kategori.deskripsi || "") + '</p>' +
+                        '</div>' +
+                        '<span class="text-lg font-bold text-white" style="font-family:\'Plus Jakarta Sans\',sans-serif;">' + formatRupiah(kategori.harga) + '</span>' +
+                    '</div>' +
+                    '<div class="cat-footer">' +
+                        '<button class="cat-select-btn w-full py-2.5 rounded-xl border border-white/10 text-white/50 text-xs font-bold uppercase tracking-wider hover:bg-white/5 transition-all" style="font-family:\'Plus Jakarta Sans\',sans-serif;">Pilih Kategori</button>' +
+                        '<span class="cat-status-label label-text text-white/70">Terpilih</span>' +
+                    '</div>';
+                container.appendChild(card);
+            });
+
+            kategoriTerpilih = container.querySelector(".ticket-cat.selected");
+            aktifkanPemilihanKartu();
+            hitungDanTampilkanRingkasan();
+        }
+
+        // Kalau halaman dibuka dengan ?konserId=..., ambil data konser & kategori tiketnya dari API
+        async function muatDataKonser() {
+            if (!konserIdDariUrl) {
+                return; // tetap pakai tampilan statis Coldplay (default)
+            }
+            try {
+                const response = await fetch(`${BASE_URL}/konser/${konserIdDariUrl}`);
+                if (!response.ok) return;
+
+                const konser = await response.json();
+                namaKonserAktif = konser.namaKonser;
+                konserIdAktif = konser.id;
+
+                document.getElementById("hero-nama-konser").textContent = konser.namaKonser;
+                document.getElementById("hero-tanggal").textContent = konser.tanggal;
+                document.getElementById("hero-lokasi").textContent = konser.lokasi;
+                if (konser.gambarUrl) {
+                    document.getElementById("hero-gambar").src = konser.gambarUrl;
                 }
-                const qtyLabel = tombolTambah
-                    ? tombolTambah.closest(".ticket-cat").querySelector(".qty-value")
-                    : tombolKurang.closest(".ticket-cat").querySelector(".qty-value");
-                if (qtyLabel) qtyLabel.textContent = qty;
+
+                if (konser.kategoriTiketList && konser.kategoriTiketList.length > 0) {
+                    renderKategoriTiket(konser.kategoriTiketList);
+                }
+            } catch (err) {
+                console.error("Gagal memuat data konser:", err);
+            }
+        }
+        muatDataKonser();
+
+        // 2. Tombol +/- jumlah tiket (satu kontrol global di panel Ringkasan Pesanan)
+        const qtyValueEl = document.querySelector(".qty-value");
+        document.querySelector(".qty-plus").addEventListener("click", function () {
+            qty += 1;
+            qtyValueEl.textContent = qty;
+            hitungDanTampilkanRingkasan();
+        });
+        document.querySelector(".qty-minus").addEventListener("click", function () {
+            if (qty > 1) {
+                qty -= 1;
+                qtyValueEl.textContent = qty;
                 hitungDanTampilkanRingkasan();
             }
         });
@@ -520,7 +598,9 @@
             const total = subtotal + BIAYA_LAYANAN + pajak;
 
             const dataPembayaran = {
-                namaKonser: kategoriTerpilih.dataset.kategori,
+                namaKonser: namaKonserAktif,
+                konserId: konserIdAktif,
+                kategoriTiket: kategoriTerpilih.dataset.kategori,
                 jumlahTiket: qty,
                 metodePembayaran: metodeTerpilih,
                 totalBayar: total,
@@ -543,6 +623,8 @@
                     localStorage.setItem("jumlahTiketBayar", qty);
                     localStorage.setItem("kategoriBayar", kategoriTerpilih.dataset.kategori);
                     localStorage.setItem("metodeBayar", metodeTerpilih);
+                    localStorage.setItem("namaKonserBayar", namaKonserAktif);
+                    localStorage.setItem("tanggalKonserBayar", document.getElementById("hero-tanggal").textContent);
                     localStorage.setItem("orderIdBayar", "SV-" + String(hasilSimpan.id).padStart(5, "0"));
 
                     window.location.href = "Verifikasi.html";

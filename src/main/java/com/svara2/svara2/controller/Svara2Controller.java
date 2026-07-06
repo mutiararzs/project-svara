@@ -39,13 +39,11 @@ public class Svara2Controller {
                     admin.getEmail(),
                     admin.getPassword()
             );
-
     // LOGIN BERHASIL
     if (cekAdmin != null) {
         return ResponseEntity
                 .ok(cekAdmin);
     }
-
     // LOGIN GAGAL
     return ResponseEntity
             .status(401)
@@ -69,13 +67,11 @@ public class Svara2Controller {
                     user.getEmail(),
                     user.getPassword()
             );
-
     // LOGIN BERHASIL
     if (cekUser != null) {
         return ResponseEntity
                 .ok(cekUser);
     }
-
     // LOGIN GAGAL
     return ResponseEntity
             .status(401)
@@ -88,7 +84,6 @@ public class Svara2Controller {
         return userService
                 .getAllUsers();
     }
-
     // GET USER BY ID
     @GetMapping("/users/{id}")
     public ResponseEntity<?> getUserById(
@@ -104,7 +99,6 @@ public class Svara2Controller {
                 .status(404)
                 .body("User tidak ditemukan");
     }
-
     // UPDATE USER
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(
@@ -121,7 +115,6 @@ public class Svara2Controller {
                 .status(404)
                 .body("User tidak ditemukan");
     }
-
     // DELETE USER
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(

@@ -310,7 +310,7 @@
             <div class="flex items-center gap-2.5">
                 <img alt="Avatar" class="w-9 h-9 rounded-full border border-purple-500/30" src="https://i.pinimg.com/736x/fb/a8/1f/fba81fdf7b0f35f5fadc99871816c8eb.jpg" />
                 <div class="hidden sm:block">
-                    <p class="text-sm font-semibold leading-none mb-0.5" style="font-family: 'Plus Jakarta Sans', sans-serif;">Jack Chowie</p>
+                    <p class="text-sm font-semibold leading-none mb-0.5" id="nama-profil" style="font-family: 'Plus Jakarta Sans', sans-serif;">Jack Chowie</p>
                     <p class="text-[10px] text-white/40 uppercase tracking-widest" style="font-family: 'Plus Jakarta Sans', sans-serif;">Premium</p>
                 </div>
             </div>
@@ -395,7 +395,7 @@
                 <div class="grid grid-cols-3 gap-5">
 
                     <!-- Card: Sheila on 7 -->
-                    <div class="concert-card group">
+                    <a href="Pembayaran.html?konserId=1" class="concert-card group block">
                         <div class="relative h-44 overflow-hidden">
                             <img class="w-full h-full object-cover" src="https://i1-c.pinimg.com/736x/b7/98/c3/b798c3c9cdbe854f7bbb0336785ce4bc.jpg" alt="Sheila on 7" />
                             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.6) 0%, transparent 50%);"></div>
@@ -416,10 +416,10 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Card: Raisa -->
-                    <div class="concert-card group">
+                    <a href="Pembayaran.html?konserId=2" class="concert-card group block">
                         <div class="relative h-44 overflow-hidden">
                             <img class="w-full h-full object-cover" src="https://i.pinimg.com/736x/93/f3/7e/93f37ec81afe1de41f15f7892153637e.jpg" alt="Raisa" />
                             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.6) 0%, transparent 50%);"></div>
@@ -439,10 +439,10 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Card: Perunggu -->
-                    <div class="concert-card group">
+                    <a href="Pembayaran.html?konserId=3" class="concert-card group block">
                         <div class="relative h-44 overflow-hidden">
                             <img class="w-full h-full object-cover" src="https://i.pinimg.com/1200x/14/88/1f/14881f726e7884840eb7bed9867a50be.jpg" alt="Perunggu" />
                             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.6) 0%, transparent 50%);"></div>
@@ -462,10 +462,10 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Card: Hindia -->
-                    <div class="concert-card group">
+                    <a href="Pembayaran.html?konserId=4" class="concert-card group block">
                         <div class="relative h-44 overflow-hidden">
                             <img class="w-full h-full object-cover" src="https://i.pinimg.com/736x/79/20/4c/79204c1d93ded6f5f759b37a369b917a.jpg" alt="Hindia" />
                             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.6) 0%, transparent 50%);"></div>
@@ -485,10 +485,10 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Card: Nadin Amizah -->
-                    <div class="concert-card group">
+                    <a href="Pembayaran.html?konserId=5" class="concert-card group block">
                         <div class="relative h-44 overflow-hidden">
                             <img class="w-full h-full object-cover" src="https://i.pinimg.com/736x/53/03/8b/53038b0b3a0defa6630b602e1e9a0f43.jpg" alt="Nadin" />
                             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.6) 0%, transparent 50%);"></div>
@@ -508,10 +508,10 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Card: Pamungkas -->
-                    <div class="concert-card group">
+                    <a href="Pembayaran.html?konserId=6" class="concert-card group block">
                         <div class="relative h-44 overflow-hidden">
                             <img class="w-full h-full object-cover" src="https://i.pinimg.com/1200x/c6/1a/05/c61a05d4ead548edf237c54197e69f80.jpg" alt="Pamungkas" />
                             <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.6) 0%, transparent 50%);"></div>
@@ -531,7 +531,7 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -622,5 +622,15 @@
             </div>
         </div>
     </main>
+
+    <script>
+        // Tampilkan nama user yang sedang login 
+        document.addEventListener("DOMContentLoaded", function () {
+            const namaUser = sessionStorage.getItem("userNama");
+            if (namaUser) {
+                document.getElementById("nama-profil").textContent = namaUser;
+            }
+        });
+    </script>
 </body>
 </html>
