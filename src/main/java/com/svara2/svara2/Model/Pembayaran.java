@@ -12,10 +12,10 @@ public class Pembayaran {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String namaKonser; // contoh: "Coldplay: Music of the Spheres", "Sheila on 7"
-    private String kategoriTiket; // contoh: "Tribune Gold", "Festival A", "Tribune Silver"
-    private String namaUser; // nama user yang login & membeli tiket, contoh: "Keisya"
-    private String tanggalBeli; // otomatis diisi backend saat transaksi disimpan
+    private String namaKonser; 
+    private String kategoriTiket; 
+    private String namaUser; 
+    private String tanggalBeli; 
     private int jumlahTiket;
     private String metodePembayaran;
     private double totalBayar;
