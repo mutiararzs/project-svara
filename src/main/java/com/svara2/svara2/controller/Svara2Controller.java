@@ -143,7 +143,6 @@ public class Svara2Controller {
     }
 
     // RIWAYAT PEMBELIAN PER USER
-    // contoh: GET /pembayaran/riwayat?namaUser=Keisya
     @GetMapping("/pembayaran/riwayat")
     public List<Pembayaran> getRiwayatPembayaran(
             @RequestParam String namaUser) {

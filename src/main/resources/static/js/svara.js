@@ -18,8 +18,6 @@ function togglePlaceholder() {
 
 }
 
-
-// Gabungan Konfigurasi Tailwind untuk semua halaman SVARA
 tailwind.config = {
     darkMode: "class",
     theme: {

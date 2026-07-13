@@ -64,7 +64,6 @@
             border: 1px solid rgba(255,255,255,0.06);
         }
 
-        /* Ticket Category Cards */
         .ticket-cat {
             background: rgba(255,255,255,0.025);
             border: 1px solid rgba(255,255,255,0.06);
@@ -91,7 +90,6 @@
         .ticket-cat.selected .cat-status-label { display: inline-block; }
         .ticket-cat.selected .cat-select-btn { display: none; }
 
-        /* Qty control */
         .qty-ctrl {
             display: flex;
             align-items: center;
@@ -112,7 +110,6 @@
         .qty-btn:hover { background: rgba(127,19,236,0.2); }
         .qty-btn:active { transform: scale(0.9); }
 
-        /* Payment method pills */
         .pay-pill {
             padding: 6px 12px;
             background: rgba(127,19,236,0.08);
@@ -131,7 +128,6 @@
             box-shadow: 0 0 0 1px rgba(127,19,236,0.4);
         }
 
-        /* Pay now button */
         .btn-pay {
             background: linear-gradient(135deg, #7f13ec, #bf5af2);
             font-family: "Plus Jakarta Sans", sans-serif;
@@ -207,11 +203,7 @@
 
     <!-- MAIN -->
     <main class="pt-[88px] pb-16 px-8 max-w-[1440px] mx-auto grid grid-cols-12 gap-7 relative z-10">
-
-        <!-- LEFT CONTENT -->
         <div class="col-span-12 lg:col-span-8 space-y-6">
-
-            <!-- Hero Banner -->
             <section class="relative h-[360px] rounded-3xl overflow-hidden">
                 <img id="hero-gambar" alt="Konser" class="w-full h-full object-cover opacity-55" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbDfaF-U4W9B6EPk5-Krr6cKlyRaHOwXrNmd0JjesKCKFIRlUHueiGam5J85X8tkTScMwctHA1JK8eKrj_EZoSlZmmGWHarQySMY_srP6ySoZdJqrT3m-ZEq7NHtDsmcUvPCdnluSEQDml8zresDfsVn8zJbr7crA-4p262Tm2hyTrtnTUHsoD8-WhdADAYAyLbIaKfltfv3AXSY1k14rOdaBKeDvXUaBQ9g5UXfmwiAfV-VXa22qHEk7Tc1X9UM4cIU-P27IYbnI" />
                 <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.96) 0%, rgba(5,3,16,0.3) 60%, transparent 100%);"></div>
@@ -316,11 +308,8 @@
             </section>
         </div>
 
-        <!-- RIGHT SIDEBAR -->
         <aside class="col-span-12 lg:col-span-4">
             <div class="sticky top-24 space-y-5">
-
-                <!-- Seat Map -->
                 <div class="glass-card rounded-2xl p-5 overflow-hidden">
                     <h3 class="text-sm font-bold mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Layout Stadion 🗺️</h3>
                     <div class="aspect-square rounded-xl relative overflow-hidden flex items-center justify-center" style="background: rgba(127,19,236,0.05);">
@@ -403,8 +392,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Help -->
                 <div class="glass-card rounded-2xl p-4 flex items-center gap-3" style="border-color:rgba(59,130,246,0.2);">
                     <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style="background:rgba(59,130,246,0.15);">
                         <span class="material-symbols-outlined text-blue-400" style="font-size:18px;">help_outline</span>
@@ -418,10 +405,9 @@
         </aside>
     </main>
 
-    <!-- Footer -->
     <footer class="mt-4 border-t border-white/5 py-8 px-8 opacity-35">
         <div class="max-w-[1440px] mx-auto flex justify-between items-center">
-            <span class="text-sm" style="font-family:'Plus Jakarta Sans',sans-serif;">SVARA © 2024</span>
+            <span class="text-sm" style="font-family:'Plus Jakarta Sans',sans-serif;">SVARA © 2026</span>
             <div class="flex gap-6 text-[10px] uppercase tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">
                 <a href="#" class="hover:text-purple-400 transition-colors">Syarat & Ketentuan</a>
                 <a href="#" class="hover:text-purple-400 transition-colors">Kebijakan Privasi</a>
@@ -431,7 +417,6 @@
     </footer>
 
     <script>
-        // Tampilkan nama user yang sedang login di profil navbar (bukan lagi hardcode "Jack Chowie")
         const namaUserProfil = sessionStorage.getItem("userNama");
         if (namaUserProfil) {
             document.getElementById("nama-profil").textContent = namaUserProfil;
@@ -441,9 +426,6 @@
         const params = new URLSearchParams(window.location.search);
         const konserIdDariUrl = params.get("konserId");
 
-        // Data konser lokal (belum ada tabel/endpoint Konser di backend,
-        // jadi datanya disimpan langsung di sini, sinkron dengan kartu-kartu
-        // konser di HomePage.html: Pembayaran.html?konserId=1..6)
         const DATA_KONSER = {
             "1": {
                 namaKonser: "Sheila on 7: Tunggu Aku di...",
@@ -512,16 +494,13 @@
             }
         };
 
-        // Data konser aktif di halaman ini (default: Coldplay, sesuai tampilan statis asli)
         let namaKonserAktif = "Coldplay: Music of the Spheres";
         let konserIdAktif = 0;
 
-        // Format angka ke Rupiah, mis. 1700000 -> "Rp 1.700.000"
         function formatRupiah(angka) {
             return "Rp " + Math.round(angka).toLocaleString("id-ID");
         }
 
-        // State pilihan saat ini
         let kategoriTerpilih = document.querySelector(".ticket-cat.selected");
         let qty = 2;
 
@@ -547,9 +526,6 @@
             document.getElementById("ringkasan-total").textContent = formatRupiah(total);
         }
 
-        // 1. Pilih kategori tiket (klik kartu, kecuali yang sold-out)
-        // Dibuat jadi fungsi supaya bisa dipanggil ulang setiap kali kartu kategori
-        // di-render ulang (misalnya setelah data konser dari API selesai dimuat).
         function aktifkanPemilihanKartu() {
             document.querySelectorAll(".ticket-cat:not(.sold-out)").forEach(function (card) {
                 card.addEventListener("click", function () {
@@ -566,7 +542,6 @@
         }
         aktifkanPemilihanKartu();
 
-        // Render ulang kartu kategori tiket berdasarkan data dari API (per konser)
         function renderKategoriTiket(kategoriList) {
             const container = document.getElementById("ticket-cat-container");
             container.innerHTML = "";
@@ -598,11 +573,9 @@
             hitungDanTampilkanRingkasan();
         }
 
-        // Kalau halaman dibuka dengan ?konserId=..., ambil data konser & kategori
-        // tiketnya dari DATA_KONSER lokal (belum ada endpoint /konser/{id} di backend)
         function muatDataKonser() {
             if (!konserIdDariUrl) {
-                return; // tetap pakai tampilan statis Coldplay (default)
+                return; 
             }
 
             const konser = DATA_KONSER[konserIdDariUrl];
@@ -627,7 +600,6 @@
         }
         muatDataKonser();
 
-        // 2. Tombol +/- jumlah tiket (satu kontrol global di panel Ringkasan Pesanan)
         const qtyValueEl = document.querySelector(".qty-value");
         document.querySelector(".qty-plus").addEventListener("click", function () {
             qty += 1;
@@ -642,7 +614,6 @@
             }
         });
 
-        // 3. Pilih metode pembayaran (klik salah satu pill)
         let metodeTerpilih = null;
         document.querySelectorAll(".pay-pill").forEach(function (pill) {
             pill.addEventListener("click", function () {
@@ -654,7 +625,6 @@
             });
         });
 
-        // 4. Klik "Bayar Sekarang" -> kirim data ke backend, lalu lanjut ke halaman verifikasi
         document.getElementById("btn-bayar-sekarang").addEventListener("click", async function () {
             if (!kategoriTerpilih) {
                 alert("Silakan pilih kategori tiket terlebih dahulu.");
@@ -690,8 +660,6 @@
                 if (response.ok) {
                     const hasilSimpan = await response.json();
 
-                    // Simpan detail pembayaran supaya halaman Verifikasi.html
-                    // bisa menampilkan data sesuai jumlah yang benar-benar dibayarkan
                     localStorage.setItem("totalPembayaran", formatRupiah(total));
                     localStorage.setItem("jumlahTiketBayar", qty);
                     localStorage.setItem("kategoriBayar", kategoriTerpilih.dataset.kategori);
@@ -710,7 +678,6 @@
             }
         });
 
-        // Tampilkan ringkasan awal saat halaman dimuat
         hitungDanTampilkanRingkasan();
     </script>
 </body>

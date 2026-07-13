@@ -195,10 +195,7 @@
         </div>
     </nav>
 
-    <!-- MAIN -->
     <main class="pt-[88px] pb-16 px-8 max-w-[1440px] mx-auto relative z-10">
-
-        <!-- Page Header -->
         <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
             <div>
                 <p class="section-eyebrow mb-1" style="color:#bf5af2; font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;">✦ Aktivitas Kamu</p>
@@ -220,7 +217,6 @@
             </div>
         </div>
 
-        <!-- Stats Strip -->
         <div class="grid grid-cols-3 gap-4 mb-10" id="stats-strip">
             <div class="glass-card rounded-2xl p-5">
                 <p class="label-text mb-2">Total Transaksi</p>
@@ -236,7 +232,6 @@
             </div>
         </div>
 
-        <!-- Loading Skeleton -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="skeleton-container">
             <div class="ticket-card skeleton-pulse">
                 <div class="h-36 bg-white/5"></div>
@@ -264,10 +259,7 @@
             </div>
         </div>
 
-        <!-- History Grid -->
         <div class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="history-container"></div>
-
-        <!-- Not Logged In State -->
         <div class="hidden flex-col items-center justify-center text-center py-24" id="guest-state">
             <div class="w-20 h-20 rounded-full flex items-center justify-center mb-5" style="background: rgba(127,19,236,0.1); border: 1px solid rgba(127,19,236,0.25);">
                 <span class="material-symbols-outlined text-purple-300" style="font-size:36px;">lock_person</span>
@@ -277,7 +269,6 @@
             <a href="LoginUser.html" class="px-8 py-3 rounded-2xl text-black text-sm font-bold" style="background: linear-gradient(135deg, #7f13ec, #bf5af2); color:white;">Masuk Sekarang</a>
         </div>
 
-        <!-- Empty State -->
         <div class="hidden flex-col items-center justify-center text-center py-24" id="empty-state">
             <div class="w-20 h-20 rounded-full flex items-center justify-center mb-5" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
                 <span class="material-symbols-outlined text-white/30" style="font-size:36px;">confirmation_number</span>
@@ -293,7 +284,6 @@
         const BASE_URL = window.location.origin;
         const namaUser = sessionStorage.getItem("userNama");
 
-        // Gambar konser, sinkron dengan DATA_KONSER di Pembayaran.html
         const GAMBAR_KONSER = {
             "Coldplay: Music of the Spheres": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbDfaF-U4W9B6EPk5-Krr6cKlyRaHOwXrNmd0JjesKCKFIRlUHueiGam5J85X8tkTScMwctHA1JK8eKrj_EZoSlZmmGWHarQySMY_srP6ySoZdJqrT3m-ZEq7NHtDsmcUvPCdnluSEQDml8zresDfsVn8zJbr7crA-4p262Tm2hyTrtnTUHsoD8-WhdADAYAyLbIaKfltfv3AXSY1k14rOdaBKeDvXUaBQ9g5UXfmwiAfV-VXa22qHEk7Tc1X9UM4cIU-P27IYbnI",
             "Sheila on 7: Tunggu Aku di...": "https://i1-c.pinimg.com/736x/b7/98/c3/b798c3c9cdbe854f7bbb0336785ce4bc.jpg",

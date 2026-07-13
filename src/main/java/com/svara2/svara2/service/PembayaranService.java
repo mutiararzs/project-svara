@@ -18,7 +18,6 @@ public class PembayaranService {
 
     public Pembayaran simpanPembayaran(
             Pembayaran pembayaran) {
-        // Catat waktu transaksi otomatis (format: "6 Juli 2026, 14:30")
         SimpleDateFormat formatTanggal =
                 new SimpleDateFormat("d MMMM yyyy, HH:mm", new Locale("id", "ID"));
         pembayaran.setTanggalBeli(formatTanggal.format(new Date()));
@@ -26,7 +25,6 @@ public class PembayaranService {
         return pembayaranRepository.save(pembayaran);
     }
 
-    // Ambil riwayat pembelian tiket milik satu user (terbaru duluan)
     public List<Pembayaran> getRiwayatByUser(String namaUser) {
         return pembayaranRepository.findByNamaUserOrderByIdDesc(namaUser);
     }

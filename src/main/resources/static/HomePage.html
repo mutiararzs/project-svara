@@ -17,8 +17,6 @@
             min-height: 100vh;
             color: white;
         }
-
-        /* Noise grain */
         body::after {
             content: '';
             position: fixed;
@@ -27,7 +25,6 @@
             pointer-events: none;
             z-index: 9999;
         }
-
         .bg-mesh {
             position: fixed;
             inset: 0;
@@ -46,7 +43,6 @@
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-
         .logo-text {
             font-family: "Plus Jakarta Sans", sans-serif;
             font-weight: 800;
@@ -55,7 +51,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .search-bar {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.07);
@@ -70,7 +65,6 @@
         .search-bar input::placeholder { color: rgba(255,255,255,0.25); }
         .search-bar input:focus { outline: none; }
 
-        /* === CARDS === */
         .glass-card {
             background: rgba(255, 255, 255, 0.025);
             backdrop-filter: blur(12px);
@@ -83,8 +77,6 @@
             transform: translateY(-3px);
             box-shadow: 0 12px 40px rgba(127,19,236,0.12);
         }
-
-        /* === HERO CARD === */
         .hero-card {
             position: relative;
             overflow: hidden;
@@ -97,8 +89,6 @@
         .hero-card:hover img {
             transform: scale(1.04);
         }
-
-        /* === CONCERT CARDS === */
         .concert-card {
             background: rgba(255,255,255,0.025);
             border: 1px solid rgba(255,255,255,0.06);
@@ -118,8 +108,6 @@
         .concert-card:hover img {
             transform: scale(1.08);
         }
-
-        /* Ticket btn */
         .ticket-btn {
             background: rgba(127,19,236,0.15);
             border: 1px solid rgba(127,19,236,0.3);
@@ -133,7 +121,6 @@
             transform: scale(1.05);
         }
 
-        /* Buy ticket CTA */
         .cta-buy {
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
             font-family: "Plus Jakarta Sans", sans-serif;
@@ -145,7 +132,6 @@
             box-shadow: 0 8px 30px rgba(251,191,36,0.4);
         }
 
-        /* Tag badges */
         .badge-hot {
             background: linear-gradient(135deg, #ff2d78, #ff6b6b);
             font-family: "Plus Jakarta Sans", sans-serif;
@@ -179,7 +165,6 @@
             border-radius: 999px;
         }
 
-        /* Section headers */
         .section-eyebrow {
             font-family: "Plus Jakarta Sans", sans-serif;
             font-size: 11px;
@@ -193,14 +178,12 @@
             font-weight: 800;
         }
 
-        /* Price text */
         .price-text {
             font-family: "Plus Jakarta Sans", sans-serif;
             font-weight: 700;
             color: #fbbf24;
         }
 
-        /* Progress bars - genre */
         .progress-bar {
             height: 3px;
             border-radius: 999px;
@@ -213,7 +196,6 @@
             transition: width 1s ease;
         }
 
-        /* Sidebar card */
         .sidebar-card {
             background: rgba(255,255,255,0.025);
             border: 1px solid rgba(255,255,255,0.06);
@@ -221,7 +203,6 @@
             padding: 20px;
         }
 
-        /* Artist row */
         .artist-row {
             display: flex;
             align-items: center;
@@ -245,7 +226,6 @@
             border-color: rgba(127,19,236,0.5);
         }
 
-        /* Neon accent lines */
         .accent-bar {
             width: 4px;
             height: 28px;
@@ -253,18 +233,15 @@
             background: linear-gradient(180deg, #bf5af2, #7f13ec);
         }
 
-        /* Scroll animation */
         @keyframes slide-up {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .page-enter { animation: slide-up 0.5s ease forwards; }
-
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(127,19,236,0.3); border-radius: 2px; }
 
-        /* Promo card */
         .promo-card {
             position: relative;
             border-radius: 20px;
@@ -300,8 +277,6 @@
                 <input class="flex-1 bg-transparent border-none text-sm" placeholder="Konser, artis, atau lokasi..." type="text" />
             </div>
         </div>
-
-        <!-- Right side -->
         <div class="flex items-center gap-2 shrink-0">
             <a href="Riwayat.html" class="w-9 h-9 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/5 transition-all" title="Riwayat Pembelian">
                 <span class="material-symbols-outlined" style="font-size: 20px;">receipt_long</span>
@@ -336,7 +311,6 @@
             </div>
 
             <div class="grid grid-cols-12 gap-5">
-                <!-- Large hero card -->
                 <div class="col-span-8 hero-card" style="aspect-ratio: 16/7;">
                     <img class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbDfaF-U4W9B6EPk5-Krr6cKlyRaHOwXrNmd0JjesKCKFIRlUHueiGam5J85X8tkTScMwctHA1JK8eKrj_EZoSlZmmGWHarQySMY_srP6ySoZdJqrT3m-ZEq7NHtDsmcUvPCdnluSEQDml8zresDfsVn8zJbr7crA-4p262Tm2hyTrtnTUHsoD8-WhdADAYAyLbIaKfltfv3AXSY1k14rOdaBKeDvXUaBQ9g5UXfmwiAfV-VXa22qHEk7Tc1X9UM4cIU-P27IYbnI" alt="Coldplay" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
                     <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(5,3,16,0.95) 0%, rgba(5,3,16,0.3) 50%, transparent 100%);"></div>
@@ -375,10 +349,7 @@
             </div>
         </section>
 
-        <!-- ===== MAIN GRID ===== -->
         <div class="grid grid-cols-12 gap-10">
-
-            <!-- ===== LEFT: Concert Grid ===== -->
             <div class="col-span-9">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="section-title text-2xl flex items-center gap-3">
@@ -538,10 +509,7 @@
                 </div>
             </div>
 
-            <!-- ===== RIGHT: Sidebar ===== -->
             <div class="col-span-3 space-y-5">
-
-                <!-- Genre Preferences -->
                 <div class="sidebar-card">
                     <h3 class="text-sm font-bold mb-4 flex items-center gap-2" style="font-family:'Plus Jakarta Sans',sans-serif;">
                         <span class="material-symbols-outlined text-yellow-400" style="font-size:18px;">analytics</span>
@@ -627,7 +595,6 @@
     </main>
 
     <script>
-        // Tampilkan nama user yang sedang login 
         document.addEventListener("DOMContentLoaded", function () {
             const namaUser = sessionStorage.getItem("userNama");
             if (namaUser) {

@@ -33,7 +33,6 @@
         }
     </script>   
     <style>
-        /* Custom Glassmorphism Utilities */
         .glass-panel {
             background: rgba(25, 16, 34, 0.6);
             backdrop-filter: blur(20px);
@@ -260,20 +259,14 @@ document.querySelector("form")
                 "Tidak dapat terhubung ke server. Silakan periksa koneksi internet Anda."
             );
         }
-        // PERUBAHAN 2: FUNGSI LOGOUT ADMIN
         function logoutAdmin() {
-        // Hapus token session admin dari browser
         sessionStorage.removeItem("isAdminLoggedIn");
         alert("Berhasil keluar dari akun Admin.");
         window.location.href = "LoginAdmin.html";
         }
-
-        // AUTO LOAD SAAT HALAMAN DIBUKA
         document.addEventListener("DOMContentLoaded", () => {
             loadUsers();
-    
-        // Mengatur tanggal secara dinamis sesuai hari ini
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById("current-date").textContent = new Date().toLocaleDateString('id-ID', options);
         });
     }

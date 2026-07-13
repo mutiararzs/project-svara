@@ -45,12 +45,10 @@
         }
     </script>
     <script>
-    // CEK VALIDASI LOGIN ADMIN (Taruh di paling atas)
     if (sessionStorage.getItem("isAdminLoggedIn") !== "true") {
         alert("Akses ditolak! Anda harus login sebagai Admin terlebih dahulu.");
-        window.location.href = "LoginAdmin.html"; // Tendang kembali ke halaman login admin
+        window.location.href = "LoginAdmin.html"; 
     }
-    // Ambil basis URL dari domain Railway kamu yang sudah online
     const BASE_URL = "https://project-svara-production.up.railway.app";
 
     async function loadUsers() {
@@ -176,8 +174,8 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 </style>
-</head>
 
+</head>
 <body class="font-body text-white antialiased overflow-x-hidden">
     <aside class="fixed top-0 left-0 h-full w-sidebar-width glass-nav-blur border-r border-glass-border z-50 flex flex-col">
         <div class="h-nav-height flex items-center px-8 border-b border-glass-border gap-2.5">
